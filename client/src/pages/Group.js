@@ -3,15 +3,31 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
+import DeleteBtn from "../components/DeleteBtn";
+import { List, ListItem } from "../components/List";
+
 
 class Group extends Component {
   state = {
-    book: {}
+    group: {},
+    members: []
   };
-
+  // When this component mounts, grab the group with the _id of this.props.match.params.id
+  // e.g. localhost:3000/groups/599dcb67f0f16317844583fc
   componentDidMount() {
-    API.getBook(this.props.match.params.id)
-      .then(res => this.setState({ book: res.data }))
+    API.getGroup(this.props.match.params.id)
+      .then(res => {
+
+        console.log("------- res.data GROUP HERE -----");
+        console.log(res.data);
+        console.log("------- res.data.members MEMBERS HERE -----");
+        console.log(res.data.members);
+
+        this.setState({
+          group: res.data,
+          members: res.data.members
+          })
+        })
       .catch(err => console.log(err));
   }
 
@@ -21,25 +37,53 @@ class Group extends Component {
         <Row>
           <Col size="md-12">
             <Jumbotron>
-              <h1>
-                {this.state.book.title} by {this.state.book.author}
-              </h1>
+              <h1>{this.state.group.name}</h1>
+              <h4>Owned by {this.state.group.owner}</h4>
             </Jumbotron>
           </Col>
         </Row>
         <Row>
           <Col size="md-10 md-offset-1">
             <article>
-              <h1>Synopsis</h1>
-              <p>
-                {this.state.book.synopsis}
-              </p>
+              <h1>Description</h1>
+              <p>{this.state.group.description}</p>
             </article>
           </Col>
         </Row>
         <Row>
+          <Col size="md-10 md-offset-1">
+            <article>
+              <h1>Members</h1>
+              <List>
+                {this.state.members.map((member)  => (
+                  <ListItem key={member._id}>
+                    <Link to={"/members/" + member._id}>
+                      <strong>{member.email}</strong>
+                    </Link>
+                    <DeleteBtn onClick={() => this.deleteMember(member._id)} />
+                  </ListItem>
+                ))}
+              </List>
+
+              {/* This does NOT work whyyy :( oh wells */}
+              {/* <List>
+                {this.state.group.members.map((member)  => (
+                  <ListItem key={member._id}>
+                    <Link to={"/members/" + member._id}>
+                      <strong>{member.email}</strong>
+                    </Link>
+                    <DeleteBtn onClick={() => this.deleteMember(member._id)} />
+                  </ListItem>
+                ))}
+              </List> */}
+            </article>
+          </Col>
+        </Row>
+
+
+        <Row>
           <Col size="md-2">
-            <Link to="/">← Back to Authors</Link>
+            <Link to="/">← Back to Home</Link>
           </Col>
         </Row>
       </Container>

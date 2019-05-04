@@ -8,8 +8,8 @@ mongoose.connect(
   "mongodb://localhost/atomicmuffin"
 );
 
-const atomicSeed = [
-  {
+
+const bookSeed = [{
     title: "The Dead Zone",
     authors: "Stephen King",
     googleId: "123blahblah1"
@@ -88,7 +88,34 @@ const atomicSeed = [
 
 db.Book
   .deleteMany({})
-  .then(() => db.Book.collection.insertMany(atomicSeed))
+  .then(() => db.Book.collection.insertMany(bookSeed))
+  .then(data => {
+    console.log(data.result.n + " records inserted!");
+    process.exit(0);
+  })
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
+
+
+const groupsSeed = [
+  {
+    owner: "user 1",
+    name: "The Dead Zone",
+    description: "description 1"
+  }, {
+    owner: "user 1",
+    name: "The Catcher in the Rye",
+    description: "description 2",
+    members: [{email: "member 1"}, {email: "member 2"}]
+  }
+];
+
+
+db.Group
+  .deleteMany({})
+  .then(() => db.Group.collection.insertMany(groupsSeed))
   .then(data => {
     console.log(data.result.n + " records inserted!");
     process.exit(0);

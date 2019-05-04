@@ -1,6 +1,28 @@
 import axios from "axios";
 
 export default {
+  // Gets all existing groups
+  getGroups: function() {
+    return axios.get("/api/groups");
+  },
+  // Gets the group with the given id
+  getGroup: function(id) {
+    return axios.get("/api/groups/" + id);
+  },
+  // Deletes the book with the given id
+  deleteGroup: function(id) {
+    return axios.delete("/api/groups/" + id);
+  },
+  // Saves a book to the database
+  saveGroup: function(groupData) {
+    console.log("------- GROUP DATA -------");
+    console.log(groupData);
+
+    return axios.post("/api/groups", groupData);
+  },
+
+
+
   // Search Google Books API.
   searchBooks: function(query) {
     return axios.get("/api/gsearch", { params: { q: query } });
