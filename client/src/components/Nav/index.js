@@ -14,6 +14,8 @@ function Nav() {
         {/* sample things -- remove when not used anymore */}
         <NavLink className="navbar-brand" to="/search" activeClassName="active"><h5>Search</h5></NavLink>
         <NavLink className="navbar-brand" to="/saved" activeClassName="active"><h5>Saved</h5></NavLink>
+        <NavLink className="navbar-brand" to="/signup" activeClassName="active"><h5>Sign Up</h5></NavLink>
+        <NavLink className="navbar-brand" to="/login" activeClassName="active"><h5>Login</h5></NavLink>
       </div>
     </nav>
   );

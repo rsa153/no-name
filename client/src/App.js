@@ -8,7 +8,11 @@ import Event from "./pages/Event";
 import Search from "./pages/Search";
 import Saved from "./pages/Saved";
 import NoMatch from "./pages/NoMatch";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
 import Nav from "./components/Nav";
+
+
 
 function App() {
   return (
@@ -22,6 +26,8 @@ function App() {
           <Route exact path="/groups/:id" component={Group} />
           <Route exact path="/createEvent" component={CreateEvent} />
           <Route exact path="/events/:id" component={Event} />
+          <Route exact path="/Login" component={Login} />
+          <Route exact path="/Signup" component={Signup} />
 
           {/* sample things -- remove when not used anymore */}
           <Route exact path="/search" component={Search} />
