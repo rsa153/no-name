@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Input, FormBtn } from "../components/Form";
 
 export default class Signup extends Component {
   constructor(props) {
@@ -39,55 +39,48 @@ export default class Signup extends Component {
       <div className="Sign-up">
         <form onSubmit={this.handleSubmit}>
 
-        <FormGroup controlId="name" bsSize="large">
-            <FormLabel>Name</FormLabel>
-            <FormControl
+            <Input
+              label="Name"
               autoFocus
               type="name"
+              placeholder="Enter your First Name"
               value={this.state.name}
               onChange={this.handleChange}
             />
-          </FormGroup>
 
-          <FormGroup controlId="email" bsSize="large">
-            <FormLabel>Email</FormLabel>
-            <FormControl
+            <Input
+              placeholder="Enter your Email"
+              label="Email"
               autoFocus
               type="email"
               value={this.state.email}
               onChange={this.handleChange}
             />
-          </FormGroup>
 
-          <FormGroup controlId="password" bsSize="large">
-            <FormLabel>Password</FormLabel>
-            <FormControl
+            <Input
+              placeholder="Enter your Password"
+              label="Password"
               value={this.state.password}
               onChange={this.handleChange}
               type="password"
             />
-          </FormGroup>
 
-          <FormGroup controlId="cpassword" bsSize="large">
-            <FormLabel>Confirm Password</FormLabel>
-            <FormControl
+            <Input
+              placeholder="Re-Enter your Password"
+              label="Confirm Password"
               value={this.state.cpassword}
               onChange={this.handleChange}
               type="password"
             />
-          </FormGroup>
           
-          <Button
-            block
-            bsSize="large"
+          <FormBtn
             disabled={!this.validateForm()}
             type="submit"
           >
             Sign Up
-          </Button>
+          </FormBtn>
         </form>
       </div>
     );
   }
 }
-export default Form;

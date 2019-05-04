@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Input, FormBtn } from "../components/Form";
 
 export default class Login extends Component {
   constructor(props) {
@@ -19,44 +19,40 @@ export default class Login extends Component {
     this.setState({
       [event.target.id]: event.target.value
     });
-  }
+  };
 
   handleSubmit = event => {
     event.preventDefault();
-  }
+  };
 
   render() {
     return (
       <div className="Login">
         <form onSubmit={this.handleSubmit}>
 
-          <FormGroup controlId="email" bsSize="large">
-            <FormLabel>Email</FormLabel>
-            <FormControl
-              autoFocus
-              type="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </FormGroup>
+          <Input
+            placeholder="Enter your Email"
+            label="Email"
+            autoFocus
+            type="email"
+            value={this.state.email}
+            onChange={this.handleChange}
+          />
 
-          <FormGroup controlId="password" bsSize="large">
-            <FormLabel>Password</FormLabel>
-            <FormControl
-              value={this.state.password}
-              onChange={this.handleChange}
-              type="password"
-            />
-          </FormGroup>
+          <Input
+            placeholder="Enter your Password"
+            label="Password"
+            value={this.state.password}
+            onChange={this.handleChange}
+            type="password"
+          />
 
-          <Button
-            block
-            bsSize="large"
+          <FormBtn
             disabled={!this.validateForm()}
             type="submit"
           >
             Login
-          </Button>
+          </FormBtn>
         </form>
       </div>
     );
