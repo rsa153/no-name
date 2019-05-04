@@ -103,7 +103,8 @@ const groupsSeed = [
   {
     owner: "user 1",
     name: "The Dead Zone",
-    description: "description 1"
+    description: "description 1",
+    members: [{email: "member 1"}, {email: "member 2"}]
   }, {
     owner: "user 1",
     name: "The Catcher in the Rye",
