@@ -76,7 +76,7 @@ export default class Signup extends Component {
               type="password"
             />
           </FormGroup>
-          
+
           <Button
             block
             bsSize="large"
@@ -90,4 +90,3 @@ export default class Signup extends Component {
     );
   }
 }
-export default Form;

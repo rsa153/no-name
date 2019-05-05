@@ -13,7 +13,6 @@ class CreateGroup extends Component {
     super(props);
 
     // Bind methods to "CreateGroup"
-    this.searchBooks = this.searchBooks.bind(this);
     this.loadGroups = this.loadGroups.bind(this);
     this.handleMemberNameChange = this.handleMemberNameChange.bind(this);
     this.handleAddMember = this.handleAddMember.bind(this);
@@ -29,11 +28,7 @@ class CreateGroup extends Component {
       owner: "",
       name: "",
       description: "",
-      // members: [],
       members: [{email: ""}],
-      // haha remove this when done
-      books: [],
-      query: "",
       action: "delete"
     };
   }
@@ -41,35 +36,6 @@ class CreateGroup extends Component {
   componentDidMount() {
     this.loadGroups();
   }
-
-  searchBooks(query) {
-    API.searchBooks(query)
-      .then((res) => {
-        const booksList = res.data.map((b) => {
-          return {
-            googleId: b.id,
-            title: b.volumeInfo.title,
-            subtitle: b.volumeInfo.subtitle || '',
-            authors: b.volumeInfo.authors,
-            description: b.volumeInfo.description,
-            image: b.volumeInfo.imageLinks.thumbnail,
-            link: b.volumeInfo.infoLink
-          };
-        });
-        this.setState({
-          books: booksList
-        });
-      })
-      .catch((err) => console.log(err));
-  };
-
-  // handleBookAction(book) {
-  //   API.saveBook(book)
-  //     .then(() => this.searchBooks(this.state.query))
-  //     .catch((err) => console.log(err));
-  // }
-
-
 
   loadGroups() {
     API.getGroups()
@@ -165,7 +131,10 @@ class CreateGroup extends Component {
   render() {
     return (
       <Container fluid>
-        <Header/>
+        <Header
+          title={`Create Group Title`}
+          subtitle={`Create Group subtile`}
+        />
 
         <Row>
           <Col size="md-10">
@@ -231,8 +200,9 @@ class CreateGroup extends Component {
 
             </form>
           </Col>
+        </Row>
 
-
+        <Row>
           <Col size="md-12">
             <Card className="mt-4 shadow">
               <Card.Header className="border-bottom-0 bg-dark text-white">
