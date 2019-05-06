@@ -6,6 +6,7 @@ import Group from "./pages/Group";
 import NoMatch from "./pages/NoMatch";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Pet from "./pages/Pet";
 import Hamburger from "./components/Nav";
 
 
@@ -18,6 +19,7 @@ function App() {
         <Hamburger />
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/Pet" component={Pet} />
           <Route exact path="/Login" component={Login} />
           <Route exact path="/Signup" component={Signup} />
 
