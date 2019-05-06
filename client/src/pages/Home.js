@@ -1,120 +1,83 @@
 import React, { Component } from "react";
-import Card from 'react-bootstrap/Card';
-import API from "../utils/API";
+import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
-import BookContainer from "../components/BookContainer";
+import API from "../utils/API";
+import Header from "../components/Header";
+import DeleteBtn from "../components/DeleteBtn";
+import { List, ListItem } from "../components/List";
 
-class Search extends Component {
 
-  constructor(props) {
-    super(props);
+class Home extends Component {
+  state = {
+    group: {},
+    members: []
+  };
+  // When this component mounts, grab the group with the _id of this.props.match.params.id
+  // e.g. localhost:3000/groups/599dcb67f0f16317844583fc
+  componentDidMount() {
+    API.getGroup(this.props.match.params.id)
+      .then(res => {
 
-    // Bind methods to "Home" component for accessibility
-    this.searchBooks = this.searchBooks.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleBookAction = this.handleBookAction.bind(this);
+        console.log("------- res.data GROUP HERE -----");
+        console.log(res.data);
+        console.log("------- res.data.members MEMBERS HERE -----");
+        console.log(res.data.members);
 
-    this.state = {
-      books: [],
-      action: "save",
-      query: ""
-    };
-  }
-
-  searchBooks(query) {
-    API.searchBooks(query)
-      .then((res) => {
-        const booksList = res.data.map((b) => {
-          return {
-            googleId: b.id,
-            title: b.volumeInfo.title,
-            subtitle: b.volumeInfo.subtitle || '',
-            authors: b.volumeInfo.authors,
-            description: b.volumeInfo.description,
-            image: b.volumeInfo.imageLinks.thumbnail,
-            link: b.volumeInfo.infoLink
-          };
-        });
         this.setState({
-          books: booksList
-        });
-      })
-      .catch((err) => console.log(err));
-  };
-
-  handleBookAction(book) {
-    API.saveBook(book)
-      .then(() => this.searchBooks(this.state.query))
-      .catch((err) => console.log(err));
+          group: res.data,
+          members: res.data.members
+          })
+        })
+      .catch(err => console.log(err));
   }
-
-  handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  };
-
-  handleFormSubmit = event => {
-    event.preventDefault();
-
-    if (event.currentTarget.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    } else {
-      this.searchBooks(this.state.query)
-    }
-  };
 
   render() {
     return (
       <Container fluid>
         <Row>
+          <Col size="md-12">
+          <Header
+            title={`Home Title`}
+            subtitle={`This is Home subtile`}
+          />
 
-          <Col size="md-6 sm-12">
-            <Card className="mt-4 shadow">
-              <Card.Header className="border-bottom-0 bg-dark text-white">
-                <h3><strong>Groups</strong></h3>
-              </Card.Header>
-              <Card.Body>
-                {/* display books if exists */}
-                {this.state.books.length ? (
-                  <BookContainer
-                    books={this.state.books}
-                    handleBookAction={this.handleBookAction}
-                    action={this.state.action}
-                  />
-                ) : (
-                  <h3 className="text-center">No Groups yet...</h3>
-                )}
-              </Card.Body>
-            </Card>
           </Col>
-
-          <Col size="md-6 sm-12">
-            <Card className="mt-4 shadow">
-              <Card.Header className="border-bottom-0 bg-dark text-white">
-                <h3><strong>Events</strong></h3>
-              </Card.Header>
-              <Card.Body>
-                {this.state.books.length ? (
-                  <BookContainer
-                    books={this.state.books}
-                    handleBookAction={this.handleBookAction}
-                    action={this.state.action}
-                  />
-                ) : (
-                  <h3 className="text-center">No Events yet...</h3>
-                )}
-              </Card.Body>
-            </Card>
+        </Row>
+        <Row>
+          <Col size="md-10 md-offset-1">
+            <article>
+              <h1>Description</h1>
+              <p>{this.state.group.description}</p>
+            </article>
           </Col>
+        </Row>
+        <Row>
+          <Col size="md-10 md-offset-1">
+            <article>
+              <h1>Members</h1>
+              <List>
+                {this.state.members.map((member)  => (
+                  <ListItem key={member._id}>
+                    <Link to={"/members/" + member._id}>
+                      <strong>{member.email}</strong>
+                    </Link>
+                    <DeleteBtn onClick={() => this.deleteMember(member._id)} />
+                  </ListItem>
+                ))}
+              </List>
+            </article>
+          </Col>
+        </Row>
 
+
+        <Row>
+          <Col size="md-2">
+            <Link to="/">← Back to Home</Link>
+          </Col>
         </Row>
       </Container>
     );
   }
 }
 
-export default Search;
+export default Home;

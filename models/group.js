@@ -6,7 +6,8 @@ const groupSchema = new Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
   // members: { type: [String] },
-  members: [{ email: [String] }],
+  members: [{ email: { type: [String], required: true }
+    }],
   image: { type: String }
 });
 

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
-import Jumbotron from "../components/Jumbotron";
+import Header from "../components/Header";
 import API from "../utils/API";
 import DeleteBtn from "../components/DeleteBtn";
 import { List, ListItem } from "../components/List";
@@ -36,10 +36,17 @@ class Group extends Component {
       <Container fluid>
         <Row>
           <Col size="md-12">
-            <Jumbotron>
+
+            {/* <Jumbotron>
               <h1>{this.state.group.name}</h1>
               <h4>Owned by {this.state.group.owner}</h4>
-            </Jumbotron>
+            </Jumbotron> */}
+
+            <Header
+              title={this.state.group.name}
+              subtitle={`Owned by:  ${this.state.group.owner}`}
+            />
+
           </Col>
         </Row>
         <Row>
@@ -64,18 +71,6 @@ class Group extends Component {
                   </ListItem>
                 ))}
               </List>
-
-              {/* This does NOT work whyyy :( oh wells */}
-              {/* <List>
-                {this.state.group.members.map((member)  => (
-                  <ListItem key={member._id}>
-                    <Link to={"/members/" + member._id}>
-                      <strong>{member.email}</strong>
-                    </Link>
-                    <DeleteBtn onClick={() => this.deleteMember(member._id)} />
-                  </ListItem>
-                ))}
-              </List> */}
             </article>
           </Col>
         </Row>
