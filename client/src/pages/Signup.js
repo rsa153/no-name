@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import ReactDOM from 'react-dom';
+
+// d added code
+import axios from 'axios';
 
  export default class Signup extends Component {
   constructor(props) {
@@ -25,12 +29,19 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 
    handleSubmit = event => {
     event.preventDefault();
+    // d commented this out to handle validation at the auth.js level
     if (this.state.password !== this.state.cpassword) {
         alert("Passwords don't match");
         return false;
     } else if (this.state.password === this.state.cpassword) {
-        alert("Passwords do match")
-        return true;
+        // alert("Passwords do match");
+
+        const { name, email, password } = this.state;
+
+        axios.post('/api/auth/register', { name, email, password })
+          .then((result) => {
+            this.props.history.push("/login");
+          });
     }
   }
 
