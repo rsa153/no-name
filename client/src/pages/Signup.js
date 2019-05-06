@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Input, FormBtn } from "../components/Form";
+import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 
-export default class Signup extends Component {
+ export default class Signup extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+     this.state = {
         name: "",
         email: "",
         password: "",
@@ -13,17 +13,17 @@ export default class Signup extends Component {
     };
   }
 
-  validateForm() {
+   validateForm() {
     return this.state.name.length > 0 && this.state.email.length > 0 && this.state.password.length > 0 && this.state.cpassword.length > 0;
   }
 
-  handleChange = event => {
+   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
   }
 
-  handleSubmit = event => {
+   handleSubmit = event => {
     event.preventDefault();
     if (this.state.password !== this.state.cpassword) {
         alert("Passwords don't match");
@@ -34,53 +34,57 @@ export default class Signup extends Component {
     }
   }
 
-  render() {
+   render() {
     return (
       <div className="Sign-up">
         <form onSubmit={this.handleSubmit}>
 
-            <Input
-              label="Name"
+         <FormGroup controlId="name" bsSize="large">
+            <FormLabel>Name</FormLabel>
+            <FormControl
               autoFocus
               type="name"
-              placeholder="Enter your First Name"
               value={this.state.name}
               onChange={this.handleChange}
             />
+          </FormGroup>
 
-            <Input
-              placeholder="Enter your Email"
-              label="Email"
+           <FormGroup controlId="email" bsSize="large">
+            <FormLabel>Email</FormLabel>
+            <FormControl
               autoFocus
               type="email"
               value={this.state.email}
               onChange={this.handleChange}
             />
+          </FormGroup>
 
-            <Input
-              placeholder="Enter your Password"
-              label="Password"
+           <FormGroup controlId="password" bsSize="large">
+            <FormLabel>Password</FormLabel>
+            <FormControl
               value={this.state.password}
               onChange={this.handleChange}
               type="password"
             />
+          </FormGroup>
 
-            <Input
-              placeholder="Re-Enter your Password"
-              label="Confirm Password"
+           <FormGroup controlId="cpassword" bsSize="large">
+            <FormLabel>Confirm Password</FormLabel>
+            <FormControl
               value={this.state.cpassword}
               onChange={this.handleChange}
               type="password"
             />
-          
-          <FormBtn
+          </FormGroup>
+
+           <Button
             block
             bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
           >
             Sign Up
-          </FormBtn>
+          </Button>
         </form>
       </div>
     );
