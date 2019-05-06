@@ -74,8 +74,6 @@ export default class Signup extends Component {
             />
           
           <FormBtn
-
-          <Button
             block
             bsSize="large"
             disabled={!this.validateForm()}
