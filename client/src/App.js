@@ -6,7 +6,8 @@ import Group from "./pages/Group";
 import NoMatch from "./pages/NoMatch";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import Nav from "./components/Nav";
+import Hamburger from "./components/Nav";
+
 
 
 
@@ -14,7 +15,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Nav />
+        <Hamburger />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/Login" component={Login} />
