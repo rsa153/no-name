@@ -15,8 +15,8 @@ class Task extends Component {
     super(props)
 
     // Bind methods to "CreateGroup"
-    this.loadTodos = this.loadTodos.bind(this);
-    this.loadTodosByDate = this.loadTodosByDate.bind(this);
+    // this.loadTodos = this.loadTodos.bind(this);
+    // this.loadTodosByDate = this.loadTodosByDate.bind(this);
 
     this.loadTodosGroupByDate = this.loadTodosGroupByDate.bind(this);
 
