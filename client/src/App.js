@@ -27,6 +27,7 @@ function App() {
 
           <Route exact path="/createGroup" component={CreateGroup} />
           <Route exact path="/groups/:id" component={Group} />
+          <Route exact path="/user/:id" component={Group} />
 
           <Route component={NoMatch} />
         </Switch>
