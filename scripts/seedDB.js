@@ -71,3 +71,31 @@ db.Task
     console.error(err);
     process.exit(1);
   });
+
+  const userSeed = [
+    {
+      name: "user 1",
+      email: "test1",
+      password: "description 1",
+      cpassword: "description 1"
+    },
+    {
+      name: "user 2",
+      email: "test2",
+      password: "description 2",
+      cpassword: "description 2"
+    }
+  ];
+
+
+db.User
+.deleteMany({})
+.then(() => db.User.collection.insertMany(userSeed))
+.then(data => {
+  console.log(data.result.n + " records inserted!");
+  process.exit(0);
+})
+.catch(err => {
+  console.error(err);
+  process.exit(1);
+});
