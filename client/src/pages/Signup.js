@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import API from "../utils/API";
 
  export default class Signup extends Component {
   constructor(props) {
     super(props);
+
+    this.validateForm = this.validateForm.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
      this.state = {
         name: "",
@@ -29,10 +34,17 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
         alert("Passwords don't match");
         return false;
     } else if (this.state.password === this.state.cpassword) {
-        alert("Passwords do match")
-        return true;
-    }
-  }
+        alert("Passwords do match");
+          API.saveUser({
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password,
+            cpassword: this.state.cpassword
+          })
+            // .then(res => this.loadGroups())
+            .catch(err => console.log(err));
+        }
+      }; 
 
    render() {
     return (
