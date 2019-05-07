@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import API from "../utils/API";
 import { setDate } from "../utils/helpers";
 import Card from 'react-bootstrap/Card';
-// import DeleteBtn from "../components/DeleteBtn";
 import { Col, Row, Container } from "../components/Grid";
-// import { Input, FormBtn, TextArea } from "../components/Form";
 import { TodoList, TodoForm } from "../components/TodoList";
 import Header from "../components/Header";
 
@@ -19,6 +17,8 @@ class Task extends Component {
     // Bind methods to "CreateGroup"
     this.loadTodos = this.loadTodos.bind(this);
     this.loadTodosByDate = this.loadTodosByDate.bind(this);
+
+    this.loadTodosGroupByDate = this.loadTodosGroupByDate.bind(this);
 
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
@@ -42,58 +42,58 @@ class Task extends Component {
     this.loadTodosGroupByDate();
   }
 
-  loadTodos() {
-    API.getTasks()
-      .then((res) => {
-        const todoItems = res.data;
-        console.log("------ TASKS LIST BELOW")
-        console.log(todoItems)
+  // loadTodos() {
+  //   API.getTasks()
+  //     .then((res) => {
+  //       const todoItems = res.data;
+  //       console.log("------ TASKS LIST BELOW")
+  //       console.log(todoItems)
 
-        this.setState({
-          todos: todoItems
-        });
-      })
-      .catch((err) => console.log(err));
-  }
+  //       this.setState({
+  //         todos: todoItems
+  //       });
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
 
-  loadTodosByDate() {
-    const query = {
-      dateDue: {
-        "$gte": moment(this.state.today).startOf('day').toDate(),
-        "$lte": moment(this.state.today).endOf('day').toDate()
-      },
-    };
-    console.log("------ HAHA query below")
-    console.log(query)
+  // loadTodosByDate() {
+  //   const query = {
+  //     dateDue: {
+  //       "$gte": moment(this.state.today).startOf('day').toDate(),
+  //       "$lte": moment(this.state.today).endOf('day').toDate()
+  //     },
+  //   };
+  //   console.log("------ HAHA query below")
+  //   console.log(query)
 
-    API.getTasksByQuery(query)
-      .then((res) => {
-        const todoItems = res.data;
-        console.log("------ TASKS LIST BELOW")
-        console.log(todoItems)
+  //   API.getTasksByQuery(query)
+  //     .then((res) => {
+  //       const todoItems = res.data;
+  //       console.log("------ TASKS LIST BELOW")
+  //       console.log(todoItems)
 
-        this.setState({
-          todos: todoItems,
-          todosByDate: todoItems
-        });
-      })
-      .catch((err) => console.log(err));
-  }
+  //       this.setState({
+  //         todos: todoItems,
+  //         todosByDate: todoItems
+  //       });
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
 
   loadTodosGroupByDate() {
     API.getTasksGroupByDate()
       .then((res) => {
         const todoItems = res.data;
-        console.log("------ TASKS LIST BELOW")
-        console.log(todoItems)
 
+        // console.log("------ TASKS LIST BELOW")
+        // console.log(todoItems)
 
-        console.log("------ TASKS LIST [0] BELOW")
-        console.log(todoItems[0])
-        console.log(todoItems[0]._id)
-        console.log(todoItems[0].tasks)
-        console.log(todoItems[0].tasks[0])
-        console.log(todoItems[0].tasks[0].name)
+        // console.log("------ TASKS LIST [0] BELOW")
+        // console.log(todoItems[0])
+        // console.log(todoItems[0]._id)
+        // console.log(todoItems[0].tasks)
+        // console.log(todoItems[0].tasks[0])
+        // console.log(todoItems[0].tasks[0].name)
 
         this.setState({
           todos: todoItems,
@@ -227,22 +227,6 @@ class Task extends Component {
             </Col>
           ))}
         </Row>
-
-
-        {/* <Row>
-          <Col size="md-4">
-            <Card className="mt-4 shadow">
-              <Card.Header className="border-bottom-0 bg-dark text-white">
-                <h3><strong>Daily Task - Date: {setDate(this.state.today)}</strong></h3>
-              </Card.Header>
-              <Card.Body>
-                <TodoList items={this.state.todos} removeItem={this.removeItem}
-                  markTodoDone={this.markTodoDone}/>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row> */}
-
       </Container>
     );
   }

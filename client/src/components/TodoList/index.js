@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-// import Card from 'react-bootstrap/Card';
-// import API from "../utils/API";
 import { setTime } from "../../utils/helpers";
+import DeleteBtn from "../DeleteBtn";
+import { Input } from "../Form";
 
-// import DeleteBtn from "../components/DeleteBtn";
-// import { Col, Row, Container } from "../Grid";
-import { Input, FormBtn, TextArea } from "../Form";
 import "./index.css"
 
 class TodoForm extends Component {
@@ -35,16 +32,11 @@ class TodoForm extends Component {
   render () {
     return (
       <form ref="form" onSubmit={this.onSubmit} className="form-inline">
-
         <Input
           value={this.props.currentItem.text}
           onChange={this.props.handleInput}
           placeholder="add a new todo..."
-          // name={this.props.currentItem.name}
-          // ref={this.props.inputElement}
-          // inputRef={this.props.inputElement}
         />
-
         <button type="submit" className="btn btn-default">Add</button>
       </form>
     );
@@ -86,7 +78,7 @@ class TodoItem extends React.Component {
           <span className="fas fa-check" aria-hidden="true" onClick={this.onClickDone}></span>
           {this.props.item.name}
           <br/> created at: {setTime(this.props.item.dateCreated)}
-          <button type="button" className="close" onClick={this.onClickClose}>&times;</button>
+          <DeleteBtn type="button" className="close" onClick={this.onClickClose}/>
         </div>
       </li>
     );
