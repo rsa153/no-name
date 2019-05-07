@@ -34,17 +34,17 @@ import axios from 'axios';
         alert("Passwords don't match");
         return false;
     } else if (this.state.password === this.state.cpassword) {
-        // alert("Passwords do match");
+        alert("Passwords do match");
 
         const { name, email, password } = this.state;
 
         axios.post('/api/auth/register', { name, email, password })
           .then((result) => {
-            this.props.history.push("/login");
+            // this.props.history.push("/login");
+            return true;
           });
     }
   }
-
    render() {
     return (
       <div className="Sign-up">
