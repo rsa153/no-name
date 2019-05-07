@@ -32,17 +32,20 @@ export default class Hamburger extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
             <NavItem>
-                <NavLink href="/createGroup">Create Group</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/pet">Choose Pet</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/signup">Sign Up</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/login">Log In</NavLink>
-              </NavItem>
+              <NavLink href="/createGroup">Create Group</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/task">Task</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/pet">Choose Pet</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/signup">Sign Up</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/login">Log In</NavLink>
+            </NavItem>
             </Nav>
           </Collapse>
         </Navbar>

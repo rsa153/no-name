@@ -12,12 +12,12 @@ mongoose.connect(
 const groupsSeed = [
   {
     owner: "user 1",
-    name: "The Dead Zone",
+    name: "The Ultimate Dead Zone",
     description: "description 1",
     members: [{email: "member 1"}, {email: "member 2"}]
   }, {
     owner: "user 1",
-    name: "The Catcher in the Rye",
+    name: "The Catcher in the Rye again",
     description: "description 2",
     members: [{email: "member 1"}, {email: "member 2"}]
   }
@@ -36,6 +36,41 @@ db.Group
     process.exit(1);
   });
 
+const tasksSeed = [
+  {
+    user: "user 1",
+    name: "go to the beach",
+    isComplete: false,
+    dateCreated: new Date(),
+    dateDue: new Date(),
+  },
+  {
+    user: "user 1",
+    name: "eat ice cream",
+    isComplete: false,
+    dateCreated: new Date(),
+    dateDue: new Date(),
+  },
+  {
+    user: "user 1",
+    name: "drink coffee",
+    isComplete: false,
+    dateCreated: new Date(),
+    dateDue: new Date(),
+  }
+];
+
+db.Task
+  .deleteMany({})
+  .then(() => db.Task.collection.insertMany(tasksSeed))
+  .then(data => {
+    console.log(data.result.n + " records inserted!");
+    process.exit(0);
+  })
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
 
   const userSeed = [
     {

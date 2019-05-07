@@ -10,7 +10,7 @@ import Header from "../components/Header";
 class CreateGroup extends Component {
 
   constructor(props) {
-    super(props);
+    super(props)
 
     // Bind methods to "CreateGroup"
     this.loadGroups = this.loadGroups.bind(this);
@@ -170,7 +170,6 @@ class CreateGroup extends Component {
                   >
                     -
                   </button>
-
                   {/* <DeleteBtn onClick={this.handleRemoveMember(idx)} /> */}
 
                 </div>

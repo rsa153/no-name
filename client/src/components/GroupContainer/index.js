@@ -18,9 +18,6 @@ function GroupContainer(props) {
             <Col md={8}>
               <h3>{group.name}</h3>
               <h5>Owner: {group.owner}</h5>
-              {/* {book.subtitle !== undefined && book.subtitle.length > 0 && (
-                <h5>{group.owner}</h5>
-              )} */}
             </Col>
             <Col md={4}>
               <div className="btn-container">
