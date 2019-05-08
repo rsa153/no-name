@@ -127,13 +127,28 @@ class Task extends Component {
       isComplete: !currentIsComplete
     }
 
-    API.updateTask(itemId, taskData)
-      .then(() => {
-        console.log("----- HAHA mark todo done ------ updateTask item ------")
-        console.log(todoItem)
-        this.loadTodosByDate()
-      })
-      .catch((err) => console.log(err));
+    const dateDiff = moment(this.state.today).diff(moment(todoItem.dateDue), "days")
+    // today.diff(future) ==> today - future < 0
+    // today.diff(past) ==> today - past > 0
+
+    console.log("----- HAHA ----- mark todo done --- meh date diff----")
+    console.log(dateDiff)
+    console.log(moment(this.state.today))
+    console.log(moment(todoItem.dateDue))
+
+    if (dateDiff === 0) {
+      // Only able to mark todo complete for today's date
+      API.updateTask(itemId, taskData)
+        .then(() => {
+          console.log("----- HAHA mark todo done ------ updateTask item ------")
+          console.log(todoItem)
+          this.loadTodosByDate()
+        })
+        .catch((err) => console.log(err));
+    } else {
+      // ----- haha ------  update this to not use alert?
+      alert("Cannot mark todo complete in the past or future...")
+    }
 
   }
 
