@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { setTime } from "../../utils/helpers";
 import DeleteBtn from "../DeleteBtn";
 import { Input } from "../Form";
+import Card from 'react-bootstrap/Card';
+import { setDate, setDateMongo } from "../../utils/helpers";
 
 import "./index.css"
 
@@ -25,7 +27,9 @@ class TodoForm extends Component {
     if (newItem) {
       this.props.addItem({
         user: "User 1",
-        name: newItem.text
+        name: newItem.text,
+        dateDue: newItem.dateDue,
+        dateCreated: newItem.dateCreated
         });
     }
   }
@@ -100,6 +104,45 @@ class TodoList extends Component {
   }
 }
 
+
+class TodoListCard extends Component {
+
+  constructor(props) {
+    super(props)
+
+    // Bind methods to "CreateGroup"
+    // this.onChange = this.onChange.bind(this);
+
+    this.state = {
+      date: new Date(),
+    };
+  }
+
+  render() {
+    return (
+      <div>
+
+        <Card className="mt-4 shadow">
+          <Card.Header className="border-bottom-0 bg-dark text-white">
+            {this.props.monthAdjust ? (
+              <h3><strong>Daily Task - Date: {setDateMongo(this.props.todoDate)}</strong></h3>
+            ) : (
+              <h3><strong>Daily Task - Date: {setDate(this.props.todoDate)}</strong></h3>
+            )}
+          </Card.Header>
+
+          <Card.Body>
+            <TodoList items={this.props.items} removeItem={this.props.removeItem}
+              markTodoDone={this.props.markTodoDone}/>
+            <p>{this.props.notodos}</p>
+          </Card.Body>
+        </Card>
+
+      </div>
+    );
+  }
+}
+
 // export default TodoList;
 
-export { TodoList, TodoForm };
+export { TodoList, TodoForm, TodoListCard };

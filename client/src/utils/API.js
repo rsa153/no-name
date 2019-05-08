@@ -25,15 +25,15 @@ export default {
     return axios.get("/api/tasks");
   },
   // Gets tasks for specified date
-  getTasksByQuery: function(query) {
+  getTasksByDate: function(query) {
     console.log("-------- HAHA ----- get task by query ----- query")
     console.log(query)
-    return axios.get("/api/tasks", { params: query });
+    return axios.get("/api/tasks/date", { params: query });
     // the one below does NOT work -______-
     // return axios.get("/api/tasks", { params: { q: query } });
   },
   // Gets tasks group by date
-  getTasksGroupByDate: function() {
+  getTasksGroupByDate: function () {
     return axios.get("/api/tasks/groups");
   },
   // Gets the task with the given id

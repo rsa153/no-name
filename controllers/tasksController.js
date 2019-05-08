@@ -9,19 +9,23 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  findAllByDate: function(req, res) {
-    // findByDateRange
+  findByDate: function(req, res) {
+    // find by date range query, could be per date or specific dates range
     if (req.query.dateDue){
-      console.log("----- Tasks contoller findAll ----- req.query -------")
+      console.log("----- Tasks contoller findByDate ----- req.query -------")
       console.log(req.query)
       req.query.dateDue = JSON.parse(req.query.dateDue)
-      console.log("----- Tasks contoller findAll ----- req.query JSON parse -------")
+      console.log("----- Tasks contoller findByDate ----- req.query JSON parse -------")
       console.log(req.query)
     }
     db.Task
       .find(req.query)
       .sort({ date: -1 })
-      .then(dbModel => res.json(dbModel))
+      // .then(dbModel => res.json(dbModel))
+      .then(dbModel => {
+        console.log(dbModel)
+        res.json(dbModel)
+      })
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
@@ -54,7 +58,7 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  groupBy: function(req, res) {
+  groupByDate: function(req, res) {
     console.log("----- Tasks contoller groupBy -------")
     db.Task
       .aggregate(
