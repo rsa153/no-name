@@ -12,16 +12,20 @@ module.exports = {
   findAllByDate: function(req, res) {
     // findByDateRange
     if (req.query.dateDue){
-      console.log("----- Tasks contoller findAll ----- req.query -------")
+      console.log("----- Tasks contoller findAllByDate ----- req.query -------")
       console.log(req.query)
       req.query.dateDue = JSON.parse(req.query.dateDue)
-      console.log("----- Tasks contoller findAll ----- req.query JSON parse -------")
+      console.log("----- Tasks contoller findAllByDate ----- req.query JSON parse -------")
       console.log(req.query)
     }
     db.Task
       .find(req.query)
       .sort({ date: -1 })
-      .then(dbModel => res.json(dbModel))
+      // .then(dbModel => res.json(dbModel))
+      .then(dbModel => {
+        console.log(dbModel)
+        res.json(dbModel)
+      })
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {

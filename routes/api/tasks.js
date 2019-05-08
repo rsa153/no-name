@@ -9,7 +9,10 @@ router.route("/")
 // Matches with "/api/tasks/groups"
 router.route("/groups")
   .get(tasksController.groupBy);
-  // .post(tasksController.create);
+
+// Matches with "/api/tasks/date"
+router.route("/date")
+  .get(tasksController.findAllByDate);
 
 // Matches with "/api/tasks/:id"
 router

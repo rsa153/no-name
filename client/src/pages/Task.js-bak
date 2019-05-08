@@ -5,8 +5,10 @@ import Card from 'react-bootstrap/Card';
 import API from "../utils/API";
 import { setDate, setDateMongo } from "../utils/helpers";
 import { Col, Row, Container } from "../components/Grid";
-import { TodoList, TodoForm, TodoListCard } from "../components/TodoList";
+import { TodoList, TodoForm } from "../components/TodoList";
 import Header from "../components/Header";
+
+import { CalendarTask, CalendarTodoList } from "../components/CalendarTask";
 
 const moment = require('moment')
 
@@ -17,8 +19,10 @@ class Task extends Component {
     super(props)
 
     // Bind methods to "CreateGroup"
-    this.loadTodosPerDate = this.loadTodosPerDate.bind(this);
-    this.loadTodosByDate = this.loadTodosByDate.bind(this);
+    // this.loadTodos = this.loadTodos.bind(this);
+    // this.loadTodosByDate = this.loadTodosByDate.bind(this);
+
+    this.loadTodosGroupByDate = this.loadTodosGroupByDate.bind(this);
 
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
@@ -26,26 +30,42 @@ class Task extends Component {
     this.handleTodoInputChange = this.handleTodoInputChange.bind(this);
 
     this.handleInputChange = this.handleInputChange.bind(this);
+
     this.onDateChange = this.onDateChange.bind(this);
 
+
     this.state = {
-      user: "user 1",
       todos: [],
       todosByDate: [],
-      currentItem: { text: "", date: "" },
-      today: new Date(),
+      currentItem: { text: "", key: "" },
+      today: moment(),
       date: new Date(),
     };
   }
 
   componentDidMount() {
-    // this.loadTodosPerDate();
-    this.loadTodosByDate();
+    // this.loadTodos();
+    // this.loadTodosByDate();
+    this.loadTodosGroupByDate();
   }
 
-  loadTodosPerDate(date) {
-    // load todos for selected date
-    console.log("------ HAHA ------- TASKS LIST BELOW -------loadTodosPerDate")
+  // loadTodos() {
+  //   API.getTasks()
+  //     .then((res) => {
+  //       const todoItems = res.data;
+  //       console.log("------ TASKS LIST BELOW")
+  //       console.log(todoItems)
+
+  //       this.setState({
+  //         todos: todoItems
+  //       });
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
+
+
+  loadTodosByDate(date) {
+    console.log("------ HAHA ------- TASKS LIST BELOW -------loadTodosByDate")
     const query = {
       dateDue: {
         "$gte": moment(date).startOf('day').toDate(),
@@ -55,7 +75,7 @@ class Task extends Component {
     console.log("------ HAHA query below")
     console.log(query)
 
-    API.getTasksPerDay(query)
+    API.getTasksByQuery(query)
       .then((res) => {
         const todoItems = res.data;
         console.log("------ HAHA ----- getTasksByQuery ------- TASKS LIST BELOW")
@@ -69,21 +89,20 @@ class Task extends Component {
       .catch((err) => console.log(err));
   }
 
-  loadTodosByDate() {
-    // load todos group by date
+  loadTodosGroupByDate() {
     API.getTasksGroupByDate()
       .then((res) => {
         const todoItems = res.data;
 
-        // console.log("------ TASKS LIST BELOW")
-        // console.log(todoItems)
+        console.log("------ TASKS LIST BELOW")
+        console.log(todoItems)
 
-        // console.log("------ TASKS LIST [0] BELOW")
-        // console.log(todoItems[0])
-        // console.log(todoItems[0]._id)
-        // console.log(todoItems[0].tasks)
-        // console.log(todoItems[0].tasks[0])
-        // console.log(todoItems[0].tasks[0].name)
+        console.log("------ TASKS LIST [0] BELOW")
+        console.log(todoItems[0])
+        console.log(todoItems[0]._id)
+        console.log(todoItems[0].tasks)
+        console.log(todoItems[0].tasks[0])
+        console.log(todoItems[0].tasks[0].name)
 
         this.setState({
           todos: todoItems,
@@ -94,14 +113,11 @@ class Task extends Component {
   }
 
   addItem(todoItem) {
-    console.log("---- HAHA ----- add item -----")
-    console.log(todoItem)
-
     API.saveTask(todoItem)
       .then(() => {
-        this.loadTodosPerDate();
+        this.loadTodosGroupByDate();
         this.setState({
-          currentItem: { text: "" }
+          currentItem: { text: "", key: "" }
         });
       })
       .catch((err) => console.log(err));
@@ -112,7 +128,7 @@ class Task extends Component {
       .then(() => {
         console.log("----- HAHA remove item ------")
         console.log(todoItem)
-        this.loadTodosByDate()
+        this.loadTodosGroupByDate()
       })
       .catch((err) => console.log(err));
   }
@@ -131,7 +147,7 @@ class Task extends Component {
       .then(() => {
         console.log("----- HAHA mark todo done ------ updateTask item ------")
         console.log(todoItem)
-        this.loadTodosByDate()
+        this.loadTodosGroupByDate()
       })
       .catch((err) => console.log(err));
 
@@ -140,7 +156,7 @@ class Task extends Component {
   onDateChange(date) {
     console.log("----- HAHA ------ onchange date")
     console.log(date)
-    this.loadTodosPerDate(date)
+    this.loadTodosByDate(date)
     this.setState({
       date
     })
@@ -163,11 +179,8 @@ class Task extends Component {
 
     const itemText = event.target.value
     const currentItem = {
-      user: this.state.user,
       text: itemText,
-      // key: Date.now()
-      dateDue: this.state.date,
-      dateCreated: this.state.today
+      key: Date.now()
     }
 
     this.setState({
@@ -208,42 +221,71 @@ class Task extends Component {
             <Row>
               {this.state.todos.map((items, idx) => (
                 <Col size="md-4">
-                  <TodoListCard
+                  <Card className="mt-4 shadow">
+                    <Card.Header className="border-bottom-0 bg-dark text-white">
+                      <h3><strong>Daily Task - Date: {setDateMongo(items._id)}</strong></h3>
+                    </Card.Header>
+
+                    <Card.Body>
+                      <TodoList items={items.tasks} removeItem={this.removeItem}
+                        markTodoDone={this.markTodoDone}/>
+                    </Card.Body>
+                  </Card>
+
+                  {/* <CalendarTodoList
                     todoDate={items._id}
-                    monthAdjust={true}
                     items={items.tasks}
                     removeItem={this.removeItem}
                     markTodoDone={this.markTodoDone}
-                  />
+                  /> */}
+
                 </Col>
               ))}
               </Row>
+
             ) : (
               <Row>
               <Col size="md-4">
+                <Card className="mt-4 shadow">
+                  <Card.Header className="border-bottom-0 bg-dark text-white">
+                    <h3><strong>Daily Task - Date: {setDate(this.state.date)}</strong></h3>
+                  </Card.Header>
 
                   {this.state.todosByDate.length ? (
-                    <TodoListCard
-                      todoDate={this.state.date}
-                      monthAdjust={false}
-                      items={this.state.todosByDate}
-                      removeItem={this.removeItem}
-                      markTodoDone={this.markTodoDone}
-                    />
+                    <Card.Body>
+                      <TodoList items={this.state.todosByDate}
+                        removeItem={this.removeItem} markTodoDone={this.markTodoDone}/>
+                    </Card.Body>
                   ) : (
-                    <TodoListCard
-                      todoDate={this.state.date}
-                      items={this.state.todosByDate}
-                      removeItem={this.removeItem}
-                      markTodoDone={this.markTodoDone}
-                      notodos={`No todos for today...`}
-                    />
+                    <Card.Body>
+                      <p>No todos for today...</p>
+                    </Card.Body>
                   )}
 
+                </Card>
               </Col>
               </Row>
 
             )}
+
+
+            {/* {this.state.todos.map((items, idx) => (
+              <Col size="md-4">
+                <Card className="mt-4 shadow">
+                  <Card.Header className="border-bottom-0 bg-dark text-white">
+                    <h3><strong>Daily Task - Date: {setDate(items._id)}</strong></h3>
+                  </Card.Header>
+
+                  <Card.Body>
+                    <TodoList items={items.tasks} removeItem={this.removeItem}
+                      markTodoDone={this.markTodoDone}/>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))} */}
+
+          {/* </Row> */}
+
 
           </Col>
 
