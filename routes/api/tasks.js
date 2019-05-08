@@ -8,11 +8,11 @@ router.route("/")
 
 // Matches with "/api/tasks/groups"
 router.route("/groups")
-  .get(tasksController.groupBy);
+  .get(tasksController.groupByDate);
 
 // Matches with "/api/tasks/date"
 router.route("/date")
-  .get(tasksController.findAllByDate);
+  .get(tasksController.findByDate);
 
 // Matches with "/api/tasks/:id"
 router

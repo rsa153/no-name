@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 import API from "../utils/API";
 import { setDate, setDateMongo } from "../utils/helpers";
 import { Col, Row, Container } from "../components/Grid";
+import { FormBtn } from "../components/Form";
 import { TodoList, TodoForm, TodoListCard } from "../components/TodoList";
 import Header from "../components/Header";
 
@@ -39,12 +40,12 @@ class Task extends Component {
   }
 
   componentDidMount() {
-    // this.loadTodosPerDate();
+    // this.loadTodosPerDate(date);
     this.loadTodosByDate();
   }
 
   loadTodosPerDate(date) {
-    // load todos for selected date
+    // load todos for selected date in calendar
     console.log("------ HAHA ------- TASKS LIST BELOW -------loadTodosPerDate")
     const query = {
       dateDue: {
@@ -55,7 +56,7 @@ class Task extends Component {
     console.log("------ HAHA query below")
     console.log(query)
 
-    API.getTasksPerDay(query)
+    API.getTasksByDate(query)
       .then((res) => {
         const todoItems = res.data;
         console.log("------ HAHA ----- getTasksByQuery ------- TASKS LIST BELOW")
@@ -77,7 +78,6 @@ class Task extends Component {
 
         // console.log("------ TASKS LIST BELOW")
         // console.log(todoItems)
-
         // console.log("------ TASKS LIST [0] BELOW")
         // console.log(todoItems[0])
         // console.log(todoItems[0]._id)
@@ -99,7 +99,7 @@ class Task extends Component {
 
     API.saveTask(todoItem)
       .then(() => {
-        this.loadTodosPerDate();
+        this.loadTodosPerDate(this.state.date);
         this.setState({
           currentItem: { text: "" }
         });
@@ -190,6 +190,11 @@ class Task extends Component {
               <TodoForm addItem={this.addItem} inputElement={this.inputElement}
                 currentItem={this.state.currentItem} handleInput={this.handleTodoInputChange}
                 />
+              <FormBtn
+                onClick={this.loadTodosByDate}
+              >
+                All Todos
+              </FormBtn>
             </div>
           </Col>
         </Row>
@@ -236,7 +241,7 @@ class Task extends Component {
                       items={this.state.todosByDate}
                       removeItem={this.removeItem}
                       markTodoDone={this.markTodoDone}
-                      notodos={`No todos for today...`}
+                      notodos={`No Todos`}
                     />
                   )}
 
