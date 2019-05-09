@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import Calendar from 'react-calendar';
-import Card from 'react-bootstrap/Card';
-
+// import Card from 'react-bootstrap/Card';
 import API from "../utils/API";
-import { setDate, setDateMongo } from "../utils/helpers";
+// import { setDate, setDateMongo } from "../utils/helpers";
 import { Col, Row, Container } from "../components/Grid";
 import { FormBtn } from "../components/Form";
-import { TodoList, TodoForm, TodoListCard } from "../components/TodoList";
+import { TodoForm, TodoListCard } from "../components/TodoList";
 import Header from "../components/Header";
 
 const moment = require('moment')

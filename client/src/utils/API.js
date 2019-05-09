@@ -1,24 +1,6 @@
 import axios from "axios";
 
 export default {
-  // Groups
-  // Gets all existing groups
-  getGroups: function() {
-    return axios.get("/api/groups");
-  },
-  // Gets the group with the given id
-  getGroup: function(id) {
-    return axios.get("/api/groups/" + id);
-  },
-  // Deletes the book with the given id
-  deleteGroup: function(id) {
-    return axios.delete("/api/groups/" + id);
-  },
-  // Saves a book to the database
-  saveGroup: function(groupData) {
-    return axios.post("/api/groups", groupData);
-  },
-
   // Tasks
   // Gets all existing tasks
   getTasks: function() {
@@ -52,19 +34,19 @@ export default {
   saveTask: function(taskData) {
     return axios.post("/api/tasks", taskData);
   },
-   // Gets all existing groups
+   // Gets all existing users
    getUser: function() {
     return axios.get("/api/user");
   },
-  // Gets the group with the given id
-  getUser: function(id) {
+  // Gets user with given id
+  getUserId: function(id) {
     return axios.get("/api/user/" + id);
   },
-  // Deletes the book with the given id
+  // Deletes user
   deleteUser: function(id) {
     return axios.delete("/api/user/" + id);
   },
-  // Saves a book to the database
+  // Saves user
   saveUser: function(userData) {
     return axios.post("/api/user", userData);
   }
