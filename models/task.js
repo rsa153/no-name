@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const moment = require('moment')
 const Schema = mongoose.Schema;
 
-
 const taskSchema = new Schema({
   user: { type: String, required: true },
   name: { type: String, required: true },
