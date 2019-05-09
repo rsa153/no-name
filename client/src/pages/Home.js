@@ -14,22 +14,22 @@ class Home extends Component {
   };
   // When this component mounts, grab the group with the _id of this.props.match.params.id
   // e.g. localhost:3000/groups/599dcb67f0f16317844583fc
-  componentDidMount() {
-    API.getGroup(this.props.match.params.id)
-      .then(res => {
+  // componentDidMount() {
+  //   API.getGroup(this.props.match.params.id)
+  //     .then(res => {
 
-        console.log("------- res.data GROUP HERE -----");
-        console.log(res.data);
-        console.log("------- res.data.members MEMBERS HERE -----");
-        console.log(res.data.members);
+  //       console.log("------- res.data GROUP HERE -----");
+  //       console.log(res.data);
+  //       console.log("------- res.data.members MEMBERS HERE -----");
+  //       console.log(res.data.members);
 
-        this.setState({
-          group: res.data,
-          members: res.data.members
-          })
-        })
-      .catch(err => console.log(err));
-  }
+  //       this.setState({
+  //         group: res.data,
+  //         members: res.data.members
+  //         })
+  //       })
+  //     .catch(err => console.log(err));
+  // }
 
   render() {
     return (
