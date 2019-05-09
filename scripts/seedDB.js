@@ -8,34 +8,6 @@ mongoose.connect(
   "mongodb://localhost/atomicmuffin"
 );
 
-
-const groupsSeed = [
-  {
-    owner: "user 1",
-    name: "The Ultimate Dead Zone",
-    description: "description 1",
-    members: [{email: "member 1"}, {email: "member 2"}]
-  }, {
-    owner: "user 1",
-    name: "The Catcher in the Rye again",
-    description: "description 2",
-    members: [{email: "member 1"}, {email: "member 2"}]
-  }
-];
-
-
-db.Group
-  .deleteMany({})
-  .then(() => db.Group.collection.insertMany(groupsSeed))
-  .then(data => {
-    console.log(data.result.n + " records inserted!");
-    process.exit(0);
-  })
-  .catch(err => {
-    console.error(err);
-    process.exit(1);
-  });
-
 const tasksSeed = [
   {
     user: "user 1",

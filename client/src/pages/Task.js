@@ -10,7 +10,6 @@ import Header from "../components/Header";
 
 const moment = require('moment')
 
-
 class Task extends Component {
 
   constructor(props) {
