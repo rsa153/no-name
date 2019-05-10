@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+// const Validator = require("validator");
+// const isEmpty = require("./isempty");
+import API from "../utils/API";
+
 
  export default class Login extends Component {
   constructor(props) {
     super(props);
+
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);  
 
      this.state = {
+      loggedIn: false,
       email: "",
       password: ""
     }
@@ -27,11 +33,11 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
     event.preventDefault();
     API.userCheck(this.props.match.params.id)
     .then(res => {
-      if (!!res.data.email) {
+      if (res.data.user.email) {
         console.log('THERE IS A USER')
         this.setState({
           loggedIn: true,
-          email: res.data.email,
+          email: res.data.user.email,
           redirectTo:"/"
         })
       } else {
@@ -41,17 +47,6 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
         })
       }
     }) 
-      .then(res => {
-        console.log(res)
-        if (!res.data.errmsg) {
-          console.log('youre good')
-          this.setState({
-            redirectTo: "/"
-          })
-        } else {
-        console.log("user does not exist")
-    }
-  })
   }
 
    render() {

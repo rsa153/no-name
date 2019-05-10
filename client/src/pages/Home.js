@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
-import API from "../utils/API";
+// import API from "../utils/API";
 import Header from "../components/Header";
 import DeleteBtn from "../components/DeleteBtn";
 import { List, ListItem } from "../components/List";

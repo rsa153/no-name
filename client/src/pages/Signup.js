@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Redirect } from 'react-router-dom'
 import API from "../utils/API";
 
 export default class Signup extends Component {
@@ -14,8 +15,18 @@ export default class Signup extends Component {
       name: "",
       email: "",
       password: "",
-      cpassword: ""
+      cpassword: "",
+      errors: {},
+      redirectTo: null
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
   }
 
   validateForm() {
@@ -39,23 +50,22 @@ export default class Signup extends Component {
       alert("Passwords don't match");
       return false;
     } else if (this.state.password === this.state.cpassword) {
-      alert("Passwords do match");
       API.saveUser({
         name: this.state.name,
         email: this.state.email,
         password: this.state.password,
         cpassword: this.state.cpassword
-      }).then(response => {
-        console.log(response);
-        if (!response.data.errmsg) {
-          console.log("youre good");
+      }).then(res => {
+        if (!res.data.errmsg) {
+          console.log('youre good');
           this.setState({
-            redirectTo: "/"
-          });
+            redirectTo: '/user'
+          })
         } else {
-          console.log("duplicate");
-        }
-      });
+        console.log('duplicate')
+          }
+          
+        })
     }
   };
 
@@ -63,7 +73,7 @@ export default class Signup extends Component {
     return (
       <div className="Sign-up">
         <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="name" bsSize="large">
+          <FormGroup controlId="name">
             <FormLabel>Name</FormLabel>
             <FormControl
               autoFocus
@@ -73,7 +83,7 @@ export default class Signup extends Component {
             />
           </FormGroup>
 
-          <FormGroup controlId="email" bsSize="large">
+          <FormGroup controlId="email">
             <FormLabel>Email</FormLabel>
             <FormControl
               autoFocus
@@ -83,7 +93,7 @@ export default class Signup extends Component {
             />
           </FormGroup>
 
-          <FormGroup controlId="password" bsSize="large">
+          <FormGroup controlId="password">
             <FormLabel>Password</FormLabel>
             <FormControl
               value={this.state.password}
@@ -92,7 +102,7 @@ export default class Signup extends Component {
             />
           </FormGroup>
 
-          <FormGroup controlId="cpassword" bsSize="large">
+          <FormGroup controlId="cpassword">
             <FormLabel>Confirm Password</FormLabel>
             <FormControl
               value={this.state.cpassword}
@@ -103,7 +113,7 @@ export default class Signup extends Component {
 
           <Button
             block
-            bsSize="large"
+            onClick={this.handleSubmit}
             disabled={!this.validateForm()}
             type="submit"
           >

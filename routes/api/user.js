@@ -12,8 +12,21 @@ router.route("/:id")
   .put(userController.update)
   .delete(userController.remove);
 
-//Rotuer for login - need to update user controller.
-// router.route("/login")
-//   .post(userController
+// Rotuer for login - need to update user controller.
+router.route("/user")
+.post(
+    '/login',
+    function (req, res, next) {
+        console.log(req.body)
+        next()
+    },
+    passport.authenticate('local'),
+    (req, res) => {
+        var userInfo = {
+            email: req.user.email
+        };
+        res.send(userInfo);
+    }
+)
 
 module.exports = router;
