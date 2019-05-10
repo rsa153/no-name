@@ -4,11 +4,13 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
  export default class Login extends Component {
   constructor(props) {
     super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);  
 
      this.state = {
       email: "",
       password: ""
-    };
+    }
   }
 
    validateForm() {
@@ -23,6 +25,33 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 
    handleSubmit = event => {
     event.preventDefault();
+    API.userCheck(this.props.match.params.id)
+    .then(res => {
+      if (!!res.data.email) {
+        console.log('THERE IS A USER')
+        this.setState({
+          loggedIn: true,
+          email: res.data.email,
+          redirectTo:"/"
+        })
+      } else {
+        this.setState({
+          loggedIn: false,
+          user: null
+        })
+      }
+    }) 
+      .then(res => {
+        console.log(res)
+        if (!res.data.errmsg) {
+          console.log('youre good')
+          this.setState({
+            redirectTo: "/"
+          })
+        } else {
+        console.log("user does not exist")
+    }
+  })
   }
 
    render() {

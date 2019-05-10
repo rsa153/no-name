@@ -8,26 +8,37 @@ import Login from "./pages/Login";
 import Pet from "./pages/Pet";
 import Hamburger from "./components/Nav";
 
-
-
-
-function App() {
+if (props.loggedIn) {
   return (
     <Router>
       <div>
         <Hamburger />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={Signup} />
-          <Route exact path="/pet" component={Pet} />
-          <Route exact path="/profile" component={Home} />
-          <Route exact path="/task" component={Task} />
+          <Route exact path="/Pet" component={Pet} />
+          <Route exact path="/Logout" component={Logout} />
+
           <Route component={NoMatch} />
         </Switch>
       </div>
     </Router>
-  );
+  )
 }
+else{
+  return (
+    <Router>
+      <div>
+        <Hamburger />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/Login" component={Login} />
+          <Route exact path="/Signup" component={Signup} />
+          <Route component={NoMatch} />
+        </Switch>
+      </div>
+    </Router>
+  )
+}
+
 
 export default App;

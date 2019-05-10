@@ -7,10 +7,13 @@ router.route("/")
   .post(userController.create);
 
 // Matches with "/api/user/:id"
-router
-  .route("/:id")
+router.route("/:id")
   .get(userController.findById)
   .put(userController.update)
   .delete(userController.remove);
+
+//Rotuer for login - need to update user controller.
+// router.route("/login")
+//   .post(userController
 
 module.exports = router;
