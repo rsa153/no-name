@@ -37,7 +37,7 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
       } else {
         this.setState({
           loggedIn: false,
-          user: null
+          email: null
         })
       }
     }) 
