@@ -92,3 +92,24 @@ db.User
   console.error(err);
   process.exit(1);
 });
+
+const petsSeed = [
+  {
+    name: "Flower 1",
+    url: "flower1.png",
+    userEmail: "d@yahoo.com"
+    // dateCreated: new Date().getDate().toString()
+  }
+];
+
+db.Pet
+  .deleteMany({})
+  .then(() => db.Pet.collection.insertMany(petsSeed))
+  .then(data => {
+    console.log(data.result.n + " records inserted!");
+    process.exit(0);
+  })
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });

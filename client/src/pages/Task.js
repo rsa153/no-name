@@ -7,8 +7,10 @@ import { Col, Row, Container } from "../components/Grid";
 import { FormBtn } from "../components/Form";
 import { TodoForm, TodoListCard } from "../components/TodoList";
 import Header from "../components/Header";
+// const petsController = require("../../controllers/petsController");
+import flower from "../images/ppfinal.jpg";
 
-const moment = require('moment')
+const moment = require('moment');
 
 class Task extends Component {
 
@@ -23,6 +25,7 @@ class Task extends Component {
     this.removeItem = this.removeItem.bind(this);
     this.markTodoDone = this.markTodoDone.bind(this);
     this.handleTodoInputChange = this.handleTodoInputChange.bind(this);
+    this.simulateFail = this.simulateFail.bind(this);
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onDateChange = this.onDateChange.bind(this);
@@ -34,12 +37,65 @@ class Task extends Component {
       currentItem: { text: "", date: "" },
       today: new Date(),
       date: new Date(),
+      currentPet: ""
     };
   }
 
   componentDidMount() {
     // this.loadTodosPerDate(date);
     this.loadTodosByDate();
+    this.loadCurrentPet();
+  }
+
+  loadCurrentPet() {
+    API.getPet()
+      .then((res) => {
+        const petURL = require('../images/' + res.data.url);
+
+        this.setState({
+          currentPet: petURL
+        });
+      })
+      .catch((err) => console.log(err));
+  }
+
+  simulateFail() {
+    // console.log(this.state);
+    var temp = this.state.currentPet.split("/");
+    
+    console.log(temp);
+
+    var temp2 = temp[temp.length-1].split(".");
+
+    console.log(temp2);
+
+    var temp3 = temp2[0].split(/([0-9]+)/);
+
+    console.log(temp3);
+
+    if(temp3[1]==="1")
+    {
+      console.log("Test");
+
+    }
+
+    // var temp3 = temp2
+
+    API.failTasks(this.state.currentPet)
+      .then((res) => {
+        console.log(res.data.url);
+        
+        // const petURL = require('../images/' + res.data.url);
+
+        // this.setState({
+        //   currentPet: petURL
+        // });
+      })
+      .catch((err) => console.log(err));
+  }
+
+  simulatePass () {
+
   }
 
   loadTodosPerDate(date) {
@@ -196,7 +252,6 @@ class Task extends Component {
           title={`Create ToDos`}
           subtitle={`Create ToDos subtitle`}
         />
-
         <Row>
           <Col size="md-10">
             <div id="main" className="center">
@@ -208,6 +263,16 @@ class Task extends Component {
               >
                 All Todos
               </FormBtn>
+              <FormBtn
+                onClick={this.simulatePass}
+              >
+                Midnight - Pass
+              </FormBtn>
+              <FormBtn
+                onClick={this.simulateFail}
+              >
+                Midnight - Fail
+              </FormBtn>
             </div>
           </Col>
         </Row>
@@ -218,7 +283,7 @@ class Task extends Component {
               onChange={this.onDateChange}
               value={this.state.date}
             />
-
+            <div className="center"><img src={this.state.currentPet} alt="TEST"/></div>
           </Col>
 
           <Col size="md-9">

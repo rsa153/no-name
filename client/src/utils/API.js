@@ -49,5 +49,14 @@ export default {
   // Saves user
   saveUser: function(userData) {
     return axios.post("/api/user", userData);
-  }
+  },
+  getPet: function() {
+    return axios.get("/api/pets");
+  },
+  // failTasks: function(currentPet) {
+  //   return axios.post("/api/pets/failTasks", currentPet);
+  // }
+  // passTasks: function(currentPet) {
+  //   return axios.post("/api/pets/failTasks", currentPet);
+  // }
 };
