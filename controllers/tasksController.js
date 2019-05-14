@@ -9,21 +9,62 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  findByDate: function(req, res) {
-    // find by date range query, could be per date or specific dates range
+  findByDateAggregate: function(req, res) {
+    // show task based on date selected on calendar
     if (req.query.dateDue){
-      console.log("----- Tasks contoller findByDate ----- req.query -------")
-      console.log(req.query)
       req.query.dateDue = JSON.parse(req.query.dateDue)
-      console.log("----- Tasks contoller findByDate ----- req.query JSON parse -------")
-      console.log(req.query)
     }
     db.Task
-      .find(req.query)
+      // .find(req.query)
+      .aggregate([
+        { $match: {
+            // dateDue: req.query.dateDue,
+            dateDue: {
+              "$gte": new Date(req.query.dateDue.$gte),
+              "$lte": new Date(req.query.dateDue.$lte)
+            },
+        }},
+        { $group : {
+          _id : { month: { $month: "$dateDue" }, day: { $dayOfMonth: "$dateDue" }, year: { $year: "$dateDue" } },
+          tasks: { $push : { _id: "$_id", name: "$name", isComplete: "$isComplete", dateDue: "$dateDue", dateCreated: "$dateCreated"} },
+          countComplete: { $sum: { $cond: [{ $eq:["$isComplete", true] }, 1, 0] } },
+          countTasks: { $sum: 1 }
+        }}
+      ])
       .sort({ date: -1 })
       // .then(dbModel => res.json(dbModel))
       .then(dbModel => {
-        console.log(dbModel)
+
+        res.json(dbModel)
+      })
+      .catch(err => res.status(422).json(err));
+  },
+  groupByDateWeekly: function(req, res) {
+    // show all tasks for a week, 3 days before - today - 3 days after
+    if (req.query.dateDue){
+      req.query.dateDue = JSON.parse(req.query.dateDue)
+    }
+    db.Task
+      // .find(req.query)
+      .aggregate([
+        { $match: {
+            // dateDue: req.query.dateDue,
+            dateDue: {
+              "$gte": new Date(req.query.dateDue.$gte),
+              "$lte": new Date(req.query.dateDue.$lte)
+            },
+        }},
+        { $group : {
+          _id : { month: { $month: "$dateDue" }, day: { $dayOfMonth: "$dateDue" }, year: { $year: "$dateDue" } },
+          tasks: { $push : { _id: "$_id", name: "$name", isComplete: "$isComplete", dateDue: "$dateDue", dateCreated: "$dateCreated"} },
+          countComplete: { $sum: { $cond: [{ $eq:["$isComplete", true] }, 1, 0] } },
+          countTasks: { $sum: 1 }
+        }},
+        { $sort: { _id: 1 }}
+      ])
+      .sort({ date: -1 })
+      // .then(dbModel => res.json(dbModel))
+      .then(dbModel => {
         res.json(dbModel)
       })
       .catch(err => res.status(422).json(err));
@@ -35,8 +76,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    console.log("----- Tasks contoller create -------")
-    console.log(req.body)
     db.Task
       .create(req.body)
       .then(dbModel => res.json(dbModel))
@@ -49,8 +88,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   remove: function(req, res) {
-    console.log("----- Tasks contoller remove -------")
-    console.log(req.params)
 
     db.Task
       .findById({ _id: req.params.id })
@@ -59,16 +96,18 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   groupByDate: function(req, res) {
-    console.log("----- Tasks contoller groupBy -------")
+    // show all tasks ever created, do we want to remove this?
     db.Task
-      .aggregate(
-       [ { $group : {
-           _id : { month: { $month: "$dateDue" }, day: { $dayOfMonth: "$dateDue" }, year: { $year: "$dateDue" } },
-           tasks: { $push : { _id: "$_id", name: "$name", isComplete: "$isComplete", dateDue: "$dateDue", dateCreated: "$dateCreated"} },
-        }} ]
-      )
+      .aggregate([
+        { $group : {
+          _id : { month: { $month: "$dateDue" }, day: { $dayOfMonth: "$dateDue" }, year: { $year: "$dateDue" } },
+          tasks: { $push : { _id: "$_id", name: "$name", isComplete: "$isComplete", dateDue: "$dateDue", dateCreated: "$dateCreated"} },
+          countComplete: { $sum: { $cond: [{ $eq:["$isComplete", true] }, 1, 0] } },
+          countTasks: { $sum: 1 }
+        }},
+        { $sort: { _id: 1 }}
+      ])
       .then(dbModel => {
-        console.log(dbModel)
         res.json(dbModel)
       })
       .catch(err => res.status(422).json(err));

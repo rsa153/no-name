@@ -34,6 +34,7 @@ export default class Hamburger extends React.Component {
             <NavItem>
               <NavLink href="/task">Task</NavLink>
             </NavItem>
+
             <NavItem>
               <NavLink href="/pet">Choose Pet</NavLink>
             </NavItem>

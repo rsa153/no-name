@@ -8,15 +8,22 @@ export default {
   },
   // Gets tasks for specified date
   getTasksByDate: function(query) {
-    console.log("-------- HAHA ----- get task by query ----- query")
-    console.log(query)
+    console.log("-------- getTasksByDate --------")
     return axios.get("/api/tasks/date", { params: query });
-    // the one below does NOT work -______-
-    // return axios.get("/api/tasks", { params: { q: query } });
+  },
+  // Gets tasks group by date weekly
+  getTasksPerWeek: function (query) {
+    console.log("-------- getTasksPerWeek --------")
+    return axios.get("/api/tasks/week", { params: query });
+
   },
   // Gets tasks group by date
   getTasksGroupByDate: function () {
     return axios.get("/api/tasks/groups");
+  },
+  // Gets daily tasks percent complete
+  getTasksPercentComplete: function () {
+    return axios.get("/api/tasks/iscomplete");
   },
   // Gets the task with the given id
   getTask: function(id) {
