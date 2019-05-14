@@ -44,6 +44,7 @@ class Task extends Component {
   }
 
   componentDidMount() {
+    console.log("TESTING A CHANGE");
     // this.loadTodosPerDate(date);
     this.loadTodosByDate();
     this.loadCurrentPet();
