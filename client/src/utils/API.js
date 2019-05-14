@@ -14,6 +14,13 @@ export default {
     // the one below does NOT work -______-
     // return axios.get("/api/tasks", { params: { q: query } });
   },
+  // Gets tasks group by date weekly
+  getTasksPerWeek: function (query) {
+    console.log("-------- HAHA ----- getTasksGroupByDateWeekly ------- get task by query ----- query")
+    console.log(query)
+    return axios.get("/api/tasks/week", { params: query });
+
+  },
   // Gets tasks group by date
   getTasksGroupByDate: function () {
     return axios.get("/api/tasks/groups");

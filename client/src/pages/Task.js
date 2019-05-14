@@ -18,6 +18,7 @@ class Task extends Component {
     // Bind methods to "CreateGroup"
     this.loadTodosPerDate = this.loadTodosPerDate.bind(this);
     this.loadTodosByDate = this.loadTodosByDate.bind(this);
+    this.loadTodosByDateWeekly = this.loadTodosByDateWeekly.bind(this);
 
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
@@ -39,7 +40,8 @@ class Task extends Component {
 
   componentDidMount() {
     // this.loadTodosPerDate(date);
-    this.loadTodosByDate();
+    // this.loadTodosByDate();
+    this.loadTodosByDateWeekly(this.state.today);
   }
 
   loadTodosPerDate(date) {
@@ -67,8 +69,33 @@ class Task extends Component {
       .catch((err) => console.log(err));
   }
 
+  loadTodosByDateWeekly(date) {
+    // load todos for selected date in calendar
+    console.log("------ HAHA ------- TASKS LIST BELOW -------loadTodosByDateWeekly")
+    const query = {
+      dateDue: {
+        "$gte": moment(date).subtract(3, 'days').startOf('day').toDate(),
+        "$lte": moment(date).add(3, 'days').endOf('day').toDate()
+      },
+    };
+    console.log("------ HAHA query below")
+    console.log(query)
+
+    API.getTasksPerWeek(query)
+      .then((res) => {
+        const todoItems = res.data;
+        console.log("------ HAHA ----- getTasksByQuery ------- TASKS LIST BELOW")
+        console.log(todoItems)
+
+        this.setState({
+          todos: todoItems,
+        });
+      })
+      .catch((err) => console.log(err));
+  }
+
   loadTodosByDate() {
-    // load todos group by date
+    // load all todos group by date
     API.getTasksGroupByDate()
       .then((res) => {
         const todoItems = res.data;
@@ -228,6 +255,12 @@ class Task extends Component {
                 onClick={this.loadTodosByDate}
               >
                 All Todos
+              </FormBtn>
+
+              <FormBtn
+                onClick={this.loadTodosByDateWeekly}
+              >
+                This Week Todos
               </FormBtn>
             </div>
           </Col>
