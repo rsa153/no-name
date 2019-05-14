@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const userController = require("../../controllers/userController");
+const passport = require("../../client/passport");
 
 // Matches with "/api/user"
 router.route("/")
@@ -12,15 +13,12 @@ router.route("/:id")
   .put(userController.update)
   .delete(userController.remove);
 
+router.route("/login")
+  .get(userController.findByEmail)
+
 // Rotuer for login - need to update user controller.
 router.route("/user")
-.post(
-    '/login',
-    function (req, res, next) {
-        console.log(req.body)
-        next()
-    },
-    passport.authenticate('local'),
+.post(passport.authenticate('local'),
     (req, res) => {
         var userInfo = {
             email: req.user.email
