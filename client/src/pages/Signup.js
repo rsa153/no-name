@@ -39,7 +39,9 @@ import API from "../utils/API";
             name: this.state.name,
             email: this.state.email,
             password: this.state.password,
-            cpassword: this.state.cpassword
+            lastLogin: new Date(),
+            lastLogout: ""
+            // cpassword: this.state.cpassword
           })
             // .then(res => this.loadGroups())
             .catch(err => console.log(err));

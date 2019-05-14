@@ -13,4 +13,9 @@ router
   .put(userController.update)
   .delete(userController.remove);
 
+  //matches with "/api/user/saveLogin/:currentUserEmail"
+// router.route("/saveLogin/:currentUserEmail")
+//   .get(userController.saveLoginTime)
+
+
 module.exports = router;

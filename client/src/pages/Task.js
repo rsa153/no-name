@@ -37,6 +37,7 @@ class Task extends Component {
       currentItem: { text: "", date: "" },
       today: new Date(),
       date: new Date(),
+      lastLogin: "",
       currentPet: ""
     };
   }
@@ -45,8 +46,8 @@ class Task extends Component {
     // this.loadTodosPerDate(date);
     this.loadTodosByDate();
     this.loadCurrentPet();
+    // this.loadTimePassed();
   }
-
   loadCurrentPet() {
     API.getPet()
       .then((res) => {
@@ -248,6 +249,12 @@ class Task extends Component {
   render() {
     return (
       <Container fluid>
+        <Row>
+          <Col size="md-12">
+            <p>adssdads</p> 
+          </Col>
+        </Row>
+        
         <Header
           title={`Create ToDos`}
           subtitle={`Create ToDos subtitle`}

@@ -5,8 +5,10 @@ const userSchema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  cpassword: { type: String, required: true },
-  tasks: { type: [String] }
+  // cpassword: { type: String, required: true },
+  tasks: { type: [String] },
+  lastLogin: {type: String},
+  lastLogout: {type: String}
 });
 
 const User = mongoose.model("User", userSchema);
