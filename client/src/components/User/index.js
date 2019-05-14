@@ -80,4 +80,4 @@ class DailyProgress extends Component {
 
 
 
-export { Pet, DailyProgress };
+export { DailyProgress };

@@ -23,6 +23,7 @@ class Task extends Component {
     this.loadTodosByDateWeekly = this.loadTodosByDateWeekly.bind(this);
 
     this.getDailyPercentComplete = this.getDailyPercentComplete.bind(this);
+    this.updateTodos = this.updateTodos.bind(this);
 
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
@@ -40,6 +41,7 @@ class Task extends Component {
       date: new Date(),
       dailyPercentComplete: 0,
       progressColor: "default",
+      view: "week"
     };
   }
 
@@ -62,6 +64,7 @@ class Task extends Component {
         const todoItems = res.data;
         this.setState({
           todos: todoItems,
+          view: "day"
         });
       })
       .catch((err) => console.log(err));
@@ -70,6 +73,10 @@ class Task extends Component {
   loadTodosByDateWeekly(date) {
     // load todos for selected date in calendar
     console.log("------- loadTodosByDateWeekly -------")
+    if (!date) {
+      date = this.state.today
+    }
+
     const query = {
       dateDue: {
         "$gte": moment(date).subtract(3, 'days').startOf('day').toDate(),
@@ -81,6 +88,7 @@ class Task extends Component {
         const todoItems = res.data;
         this.setState({
           todos: todoItems,
+          view: "week"
         });
       })
       .catch((err) => console.log(err));
@@ -93,6 +101,7 @@ class Task extends Component {
         const todoItems = res.data;
         this.setState({
           todos: todoItems,
+          view: "all"
         });
       })
       .catch((err) => console.log(err));
@@ -142,13 +151,23 @@ class Task extends Component {
       .catch((err) => console.log(err));
   }
 
+
+  updateTodos() {
+    this.getDailyPercentComplete(this.state.today)
+
+    if (this.state.view === "week") {
+      this.loadTodosByDateWeekly(this.state.today);
+    } else if (this.state.view === "day") {
+      this.loadTodosPerDate(this.state.date);
+    }
+  }
+
   addItem(todoItem) {
     console.log("---- add item -----")
-
     API.saveTask(todoItem)
       .then(() => {
-        this.getDailyPercentComplete(this.state.today)
-        this.loadTodosPerDate(this.state.date);
+        this.updateTodos()
+
         this.setState({
           currentItem: { text: "" }
         });
@@ -160,8 +179,7 @@ class Task extends Component {
     console.log("----- remove item ------")
     API.deleteTask(todoItem)
       .then(() => {
-        this.getDailyPercentComplete(this.state.today)
-        this.loadTodosByDateWeekly(this.state.today)
+        this.updateTodos()
       })
       .catch((err) => console.log(err));
   }
@@ -179,8 +197,7 @@ class Task extends Component {
       // Only able to mark todo complete for today's date
       API.updateTask(itemId, taskData)
         .then(() => {
-          this.getDailyPercentComplete(this.state.today)
-          this.loadTodosByDateWeekly(this.state.today)
+          this.updateTodos()
         })
         .catch((err) => console.log(err));
     } else {
