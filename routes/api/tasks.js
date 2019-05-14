@@ -12,7 +12,6 @@ router.route("/groups")
 
 // Matches with "/api/tasks/date"
 router.route("/date")
-  // .get(tasksController.findByDate);
   .get(tasksController.findByDateAggregate);
 
 // Matches with "/api/tasks/week"

@@ -9,33 +9,10 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  findByDate: function(req, res) {
-    // find by date range query, could be per date or specific dates range
-    if (req.query.dateDue){
-      console.log("----- Tasks contoller findByDate ----- req.query -------")
-      console.log(req.query)
-      req.query.dateDue = JSON.parse(req.query.dateDue)
-      console.log("----- Tasks contoller findByDate ----- req.query JSON parse -------")
-      console.log(req.query)
-    }
-    db.Task
-      .find(req.query)
-      .sort({ date: -1 })
-      // .then(dbModel => res.json(dbModel))
-      .then(dbModel => {
-        console.log(dbModel)
-        res.json(dbModel)
-      })
-      .catch(err => res.status(422).json(err));
-  },
   findByDateAggregate: function(req, res) {
-    // find by date range query, could be per date or specific dates range
+    // show task based on date selected on calendar
     if (req.query.dateDue){
-      console.log("----- Tasks contoller findByDateAggregate ----- req.query -------")
-      console.log(req.query)
       req.query.dateDue = JSON.parse(req.query.dateDue)
-      console.log("----- Tasks contoller findByDateAggregate ----- req.query JSON parse -------")
-      console.log(req.query)
     }
     db.Task
       // .find(req.query)
@@ -57,13 +34,7 @@ module.exports = {
       .sort({ date: -1 })
       // .then(dbModel => res.json(dbModel))
       .then(dbModel => {
-        console.log("----- Tasks contoller findByDateAggregate ----- dbModel -------")
-        console.log(req.query)
-        console.log("----- Tasks contoller findByDateAggregate ----- dateDue -------")
-        console.log(req.query.dateDue)
-        console.log(req.query.dateDue.$gte)
-        console.log(req.query.dateDue.$lte)
-        console.log(dbModel)
+
         res.json(dbModel)
       })
       .catch(err => res.status(422).json(err));
@@ -71,11 +42,7 @@ module.exports = {
   groupByDateWeekly: function(req, res) {
     // show all tasks for a week, 3 days before - today - 3 days after
     if (req.query.dateDue){
-      console.log("----- Tasks contoller groupByDateWeekly ----- req.query -------")
-      console.log(req.query)
       req.query.dateDue = JSON.parse(req.query.dateDue)
-      console.log("----- Tasks contoller groupByDateWeekly ----- req.query JSON parse -------")
-      console.log(req.query)
     }
     db.Task
       // .find(req.query)
@@ -98,13 +65,6 @@ module.exports = {
       .sort({ date: -1 })
       // .then(dbModel => res.json(dbModel))
       .then(dbModel => {
-        console.log("----- Tasks contoller groupByDateWeekly ----- dbModel -------")
-        console.log(req.query)
-        console.log("----- Tasks contoller groupByDateWeekly ----- dateDue -------")
-        console.log(req.query.dateDue)
-        console.log(req.query.dateDue.$gte)
-        console.log(req.query.dateDue.$lte)
-        console.log(dbModel)
         res.json(dbModel)
       })
       .catch(err => res.status(422).json(err));
@@ -116,8 +76,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    console.log("----- Tasks contoller create -------")
-    console.log(req.body)
     db.Task
       .create(req.body)
       .then(dbModel => res.json(dbModel))
@@ -130,8 +88,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   remove: function(req, res) {
-    console.log("----- Tasks contoller remove -------")
-    console.log(req.params)
 
     db.Task
       .findById({ _id: req.params.id })
@@ -140,7 +96,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   groupByDate: function(req, res) {
-    console.log("----- Tasks contoller groupBy -------")
+    // show all tasks ever created, do we want to remove this?
     db.Task
       .aggregate([
         { $group : {
@@ -152,7 +108,6 @@ module.exports = {
         { $sort: { _id: 1 }}
       ])
       .then(dbModel => {
-        console.log(dbModel)
         res.json(dbModel)
       })
       .catch(err => res.status(422).json(err));
