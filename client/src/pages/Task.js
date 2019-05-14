@@ -30,10 +30,10 @@ class Task extends Component {
     this.state = {
       user: "user 1",
       todos: [],
-      todosByDate: [],
       currentItem: { text: "", date: "" },
       today: new Date(),
       date: new Date(),
+      dailyPercentComplete: 0,
     };
   }
 
@@ -61,8 +61,7 @@ class Task extends Component {
         console.log(todoItems)
 
         this.setState({
-          todos: [],
-          todosByDate: todoItems
+          todos: todoItems,
         });
       })
       .catch((err) => console.log(err));
@@ -85,8 +84,30 @@ class Task extends Component {
 
         this.setState({
           todos: todoItems,
-          // todosByDate: todoItems
         });
+      })
+      .catch((err) => console.log(err));
+  }
+
+  getDailyPercentComplete() {
+    // load todos group by date
+    API.getTasksGroupByDate()
+      .then((res) => {
+        const todoItems = res.data;
+
+        // console.log("------ TASKS LIST BELOW")
+        // console.log(todoItems)
+        // console.log("------ TASKS LIST [0] BELOW")
+        // console.log(todoItems[0])
+        // console.log(todoItems[0]._id)
+        // console.log(todoItems[0].tasks)
+        // console.log(todoItems[0].tasks[0])
+        // console.log(todoItems[0].tasks[0].name)
+
+        this.setState({
+          dailyPercentComplete: 0,
+        });
+
       })
       .catch((err) => console.log(err));
   }
@@ -223,6 +244,35 @@ class Task extends Component {
 
           <Col size="md-9">
             {this.state.todos.length ? (
+              <Row>
+              {this.state.todos.map((items, idx) => (
+                <Col size="md-4">
+                  <TodoListCard
+                    todoDate={items._id}
+                    monthAdjust={true}
+                    items={items.tasks}
+                    removeItem={this.removeItem}
+                    markTodoDone={this.markTodoDone}
+                  />
+                </Col>
+              ))}
+              </Row>
+            ) : (
+              <Row>
+              <Col size="md-4">
+                <TodoListCard
+                  todoDate={this.state.date}
+                  items={this.state.todos}
+                  removeItem={this.removeItem}
+                  markTodoDone={this.markTodoDone}
+                  notodos={`No Todos`}
+                />
+              </Col>
+              </Row>
+            )}
+
+            {/*
+            {this.state.todos.length ? (
             <Row>
               {this.state.todos.map((items, idx) => (
                 <Col size="md-4">
@@ -239,7 +289,6 @@ class Task extends Component {
             ) : (
               <Row>
               <Col size="md-4">
-
                   {this.state.todosByDate.length ? (
                     <TodoListCard
                       todoDate={this.state.date}
@@ -257,11 +306,11 @@ class Task extends Component {
                       notodos={`No Todos`}
                     />
                   )}
-
               </Col>
               </Row>
+            )} */}
 
-            )}
+
 
           </Col>
 

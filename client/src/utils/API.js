@@ -18,6 +18,10 @@ export default {
   getTasksGroupByDate: function () {
     return axios.get("/api/tasks/groups");
   },
+  // Gets daily tasks percent complete
+  getTasksPercentComplete: function () {
+    return axios.get("/api/tasks/iscomplete");
+  },
   // Gets the task with the given id
   getTask: function(id) {
     return axios.get("/api/tasks/" + id);
