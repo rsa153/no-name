@@ -39,7 +39,8 @@ import API from "../utils/API";
             name: this.state.name,
             email: this.state.email,
             password: this.state.password,
-            lastLogin: new Date(),
+            isLoggedIn: "true",
+            lastLogin: new Date().toDateString(),
             lastLogout: ""
             // cpassword: this.state.cpassword
           })

@@ -21,6 +21,8 @@ class Task extends Component {
     this.loadTodosPerDate = this.loadTodosPerDate.bind(this);
     this.loadTodosByDate = this.loadTodosByDate.bind(this);
     this.loadTodosByDateWeekly = this.loadTodosByDateWeekly.bind(this);
+    this.loadCurrentPet = this.loadCurrentPet.bind(this);
+    this.loadCurrentUser = this.loadCurrentUser.bind(this);
 
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
@@ -44,12 +46,32 @@ class Task extends Component {
   }
 
   componentDidMount() {
-    console.log("TESTING A CHANGE");
     // this.loadTodosPerDate(date);
-    this.loadTodosByDate();
+    // this.loadTodosByDate();
     this.loadCurrentPet();
+    this.loadTodosByDateWeekly(this.state.today);
+    this.loadCurrentUser();
     // this.loadTimePassed();
   }
+
+  loadCurrentUser() {
+    API.getcurrentuser()
+      .then((res) => {
+        this.setState({
+          user: res.data.name,
+          lastLogin: res.data.lastLogin
+        });
+
+        console.log(res.data);
+        // const petURL = require('../images/' + res.data.url);
+
+        // this.setState({
+        //   currentPet: petURL
+        // });]
+      })
+      .catch((err) => console.log(err));
+  }
+  
   loadCurrentPet() {
     API.getPet()
       .then((res) => {
@@ -99,7 +121,7 @@ class Task extends Component {
 
   simulatePass () {
 
-    this.loadTodosByDateWeekly(this.state.today);
+    
   }
 
   loadTodosPerDate(date) {
@@ -242,7 +264,9 @@ class Task extends Component {
       <Container fluid>
         <Row>
           <Col size="md-12">
-            <p>adssdads</p> 
+            <p>Welcome to your task page {this.state.user}</p> 
+            <p>You last logged in "THIS MANY DAYS AGO" on {this.state.lastLogin}</p>
+            <div><img src={this.state.currentPet} alt="TEST"/></div>
           </Col>
         </Row>
         
@@ -286,7 +310,6 @@ class Task extends Component {
               onChange={this.onDateChange}
               value={this.state.date}
             />
-            <div className="center"><img src={this.state.currentPet} alt="TEST"/></div>
           </Col>
 
           <Col size="md-9">

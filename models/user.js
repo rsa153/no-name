@@ -6,7 +6,8 @@ const userSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   // cpassword: { type: String, required: true },
-  tasks: { type: [String] },
+  isLoggedIn: {type: String},
+  // tasks: { type: [String] },
   lastLogin: {type: String},
   lastLogout: {type: String}
 });

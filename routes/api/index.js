@@ -1,10 +1,10 @@
 const router = require("express").Router();
 const taskRoutes = require("./tasks");
-const userRoutes = require("./user");
+const userRoutes = require("./users");
 const petRoutes = require("./pets");
 
 // User routes
-router.use("/user", userRoutes);
+router.use("/users", userRoutes);
 
 // Task routes
 router.use("/tasks", taskRoutes);

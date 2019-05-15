@@ -43,19 +43,22 @@ export default {
   },
    // Gets all existing users
    getUser: function() {
-    return axios.get("/api/user");
+    return axios.get("/api/users");
   },
   // Gets user with given id
   getUserId: function(id) {
-    return axios.get("/api/user/" + id);
+    return axios.get("/api/users/" + id);
   },
   // Deletes user
   deleteUser: function(id) {
-    return axios.delete("/api/user/" + id);
+    return axios.delete("/api/users/" + id);
   },
   // Saves user
   saveUser: function(userData) {
-    return axios.post("/api/user", userData);
+    return axios.post("/api/users", userData);
+  },
+  getcurrentuser: function() {
+    return axios.get("/api/users/getcurrentuser");
   },
   getPet: function() {
     return axios.get("/api/pets");

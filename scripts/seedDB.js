@@ -67,16 +67,12 @@ db.Task
 
   const userSeed = [
     {
-      name: "user 1",
-      email: "test1",
-      password: "description 1",
-      cpassword: "description 1"
-    },
-    {
-      name: "user 2",
-      email: "test2",
-      password: "description 2",
-      cpassword: "description 2"
+      name: "David",
+      email: "d@yahoo.com",
+      password: "123",
+      isLoggedIn: "true",
+      lastLogin: "",
+      lastLogout: ""
     }
   ];
 
