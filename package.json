@@ -28,6 +28,7 @@
     "moment": "^2.24.0",
     "mongoose": "^5.3.16",
     "multer": "^1.4.1",
+    "node": "^12.2.0",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.8",
     "react-calendar": "^2.18.1",
@@ -36,5 +37,16 @@
     "reactstrap": "^8.0.0",
     "react-three-fiber": "^2.1.0",
     "three": "^0.104.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rsa153/no-name.git"
+  },
+  "engines": {
+    "node": "<=11.10.0"
+  },
+  "bugs": {
+    "url": "https://github.com/rsa153/no-name/issues"
+  },
+  "homepage": "https://github.com/rsa153/no-name#readme"
 }
