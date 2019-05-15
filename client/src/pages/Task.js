@@ -8,7 +8,7 @@ import { FormBtn } from "../components/Form";
 import { TodoForm, TodoListCard } from "../components/TodoList";
 import Header from "../components/Header";
 // const petsController = require("../../controllers/petsController");
-import flower from "../images/ppfinal.jpg";
+// import flower from "../images/ppfinal.jpg";
 
 const moment = require('moment');
 
@@ -39,6 +39,7 @@ class Task extends Component {
       currentItem: { text: "", date: "" },
       today: new Date(),
       date: new Date(),
+      daysDifference: "",
       lastLogin: "",
       currentPet: "",
       dailyPercentComplete: 0,
@@ -57,17 +58,22 @@ class Task extends Component {
   loadCurrentUser() {
     API.getcurrentuser()
       .then((res) => {
+        
         this.setState({
           user: res.data.name,
           lastLogin: res.data.lastLogin
         });
 
-        console.log(res.data);
-        // const petURL = require('../images/' + res.data.url);
-
-        // this.setState({
-        //   currentPet: petURL
-        // });]
+        var date1;
+        var date2;
+        date1 = this.state.today;
+        date2 = new Date(this.state.lastLogin);
+        var res = Math.abs(date1 - date2) / 1000;
+        var days = Math.floor(res / 86400);
+        console.log("Difference: "+days);
+        this.setState({
+          daysDifference: days
+        });
       })
       .catch((err) => console.log(err));
   }
@@ -265,7 +271,7 @@ class Task extends Component {
         <Row>
           <Col size="md-12">
             <p>Welcome to your task page {this.state.user}</p> 
-            <p>You last logged in "THIS MANY DAYS AGO" on {this.state.lastLogin}</p>
+            <p>You last logged in {this.state.daysDifference} days ago on {this.state.lastLogin}</p>
             <div><img src={this.state.currentPet} alt="TEST"/></div>
           </Col>
         </Row>
