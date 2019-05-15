@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-// const Validator = require("validator");
-// const isEmpty = require("./isempty");
 import API from "../utils/API";
 
 
@@ -31,8 +29,9 @@ import API from "../utils/API";
 
    handleSubmit = event => {
     event.preventDefault();
-    API.userCheck(this.props.match.params.id)
+    API.getUser(this.props.match.params.id)
     .then(res => {
+      console.log(res.data.user.email)
       if (res.data.user.email) {
         console.log('THERE IS A USER')
         this.setState({
@@ -54,7 +53,7 @@ import API from "../utils/API";
       <div className="Login">
         <form onSubmit={this.handleSubmit}>
 
-           <FormGroup controlId="email" bsSize="large">
+           <FormGroup controlId="email">
             <FormLabel>Email</FormLabel>
             <FormControl
               autoFocus
@@ -64,7 +63,7 @@ import API from "../utils/API";
             />
           </FormGroup>
 
-           <FormGroup controlId="password" bsSize="large">
+           <FormGroup controlId="password">
             <FormLabel>Password</FormLabel>
             <FormControl
               value={this.state.password}
@@ -75,8 +74,7 @@ import API from "../utils/API";
 
            <Button
             block
-            bsSize="large"
-            disabled={!this.validateForm()}
+            // disabled={!this.validateForm()}
             type="submit"
           >
             Login

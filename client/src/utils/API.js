@@ -35,8 +35,8 @@ export default {
     return axios.post("/api/tasks", taskData);
   },
    // Gets all existing users
-   getUser: function() {
-    return axios.get("/api/user");
+  getUser: function(email) {
+    return axios.get("/api/user" + email);
   },
   // Gets user with given id
   getUserId: function(id) {
