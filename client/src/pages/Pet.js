@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Col, Row, Container } from "../components/Grid";
 // import { Image } from "../components/Images";
-import flower from "../images/ppfinal.jpg";
+import flower from "../images/flower-5.jpg";
 
 class Pet extends Component {
   myfunction() {
