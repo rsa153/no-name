@@ -6,11 +6,13 @@ import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
 import { FormBtn } from "../components/Form";
 import { TodoForm, TodoListCard } from "../components/TodoList";
+import { DailyProgress } from "../components/User";
 import Header from "../components/Header";
 // const petsController = require("../../controllers/petsController");
 // import flower from "../images/ppfinal.jpg";
 
 const moment = require('moment');
+
 
 class Task extends Component {
 
@@ -23,6 +25,9 @@ class Task extends Component {
     this.loadTodosByDateWeekly = this.loadTodosByDateWeekly.bind(this);
     this.loadCurrentPet = this.loadCurrentPet.bind(this);
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
+
+    this.getDailyPercentComplete = this.getDailyPercentComplete.bind(this);
+    this.updateTodos = this.updateTodos.bind(this);
 
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
@@ -43,6 +48,8 @@ class Task extends Component {
       lastLogin: "",
       currentPet: "",
       dailyPercentComplete: 0,
+      progressColor: "default",
+      view: "week"
     };
   }
 
@@ -50,6 +57,7 @@ class Task extends Component {
     // this.loadTodosPerDate(date);
     // this.loadTodosByDate();
     this.loadCurrentPet();
+    this.getDailyPercentComplete(this.state.today)
     this.loadTodosByDateWeekly(this.state.today);
     this.loadCurrentUser();
     // this.loadTimePassed();
@@ -144,6 +152,7 @@ class Task extends Component {
         const todoItems = res.data;
         this.setState({
           todos: todoItems,
+          view: "day"
         });
       })
       .catch((err) => console.log(err));
@@ -152,6 +161,10 @@ class Task extends Component {
   loadTodosByDateWeekly(date) {
     // load todos for selected date in calendar
     console.log("------- loadTodosByDateWeekly -------")
+    if (!date) {
+      date = this.state.today
+    }
+
     const query = {
       dateDue: {
         "$gte": moment(date).subtract(3, 'days').startOf('day').toDate(),
@@ -163,6 +176,7 @@ class Task extends Component {
         const todoItems = res.data;
         this.setState({
           todos: todoItems,
+          view: "week"
         });
       })
       .catch((err) => console.log(err));
@@ -175,29 +189,73 @@ class Task extends Component {
         const todoItems = res.data;
         this.setState({
           todos: todoItems,
+          view: "all"
         });
       })
       .catch((err) => console.log(err));
   }
 
-  // getDailyPercentComplete() {
-  //   // get daily percent complete for future development
-  //   API.getTasksGroupByDate()
-  //     .then((res) => {
-  //       const todoItems = res.data;
-  //       this.setState({
-  //         dailyPercentComplete: 0,
-  //       });
-  //     })
-  //     .catch((err) => console.log(err));
-  // }
+  getDailyPercentComplete(date) {
+    // get daily percent complete for future development
+    console.log("------- getDailyPercentComplete -------")
+    const query = {
+      dateDue: {
+        "$gte": moment(date).startOf('day').toDate(),
+        "$lte": moment(date).endOf('day').toDate()
+      },
+    };
+    API.getTasksByDate(query)
+      .then((res) => {
+        const todoItems = res.data;
+        console.log("------- getTasksByDate -------")
+        console.log(todoItems)
+        console.log(todoItems[0].countComplete)
+        console.log(todoItems[0].countTasks)
+
+        const dailyTask = todoItems[0]
+
+        let percentComplete = (dailyTask.countComplete / dailyTask.countTasks) * 100
+        percentComplete = percentComplete.toFixed(2)
+
+        console.log("------- daily percentComplete -------")
+        console.log(percentComplete)
+
+        // Set color for progress bar
+        let color = "active";
+        if (percentComplete <= 20) {
+          color = "error";
+        } else if (percentComplete > 20 && percentComplete < 50) {
+          color = "active";
+        } else if (percentComplete > 55 && percentComplete < 90) {
+          color = "default";
+        }
+        console.log(color)
+
+        this.setState({
+          dailyPercentComplete: percentComplete,
+          progressColor: color,
+        });
+      })
+      .catch((err) => console.log(err));
+  }
+
+
+  updateTodos() {
+    this.getDailyPercentComplete(this.state.today)
+
+    if (this.state.view === "week") {
+      this.loadTodosByDateWeekly(this.state.today);
+    } else if (this.state.view === "day") {
+      this.loadTodosPerDate(this.state.date);
+    }
+  }
 
   addItem(todoItem) {
     console.log("---- add item -----")
-
     API.saveTask(todoItem)
       .then(() => {
-        this.loadTodosPerDate(this.state.date);
+        this.updateTodos()
+
         this.setState({
           currentItem: { text: "" }
         });
@@ -209,7 +267,7 @@ class Task extends Component {
     console.log("----- remove item ------")
     API.deleteTask(todoItem)
       .then(() => {
-        this.loadTodosByDateWeekly(this.state.today)
+        this.updateTodos()
       })
       .catch((err) => console.log(err));
   }
@@ -227,7 +285,7 @@ class Task extends Component {
       // Only able to mark todo complete for today's date
       API.updateTask(itemId, taskData)
         .then(() => {
-          this.loadTodosByDateWeekly(this.state.today)
+          this.updateTodos()
         })
         .catch((err) => console.log(err));
     } else {
@@ -280,6 +338,15 @@ class Task extends Component {
           title={`Create ToDos`}
           subtitle={`Create ToDos subtitle`}
         />
+        <Row>
+          <Col size="md-10">
+            <div id="main" className="center mb-3">
+              <DailyProgress today={this.state.today}
+                color={this.state.progressColor} percent={this.state.dailyPercentComplete}/>
+            </div>
+          </Col>
+        </Row>
+
         <Row>
           <Col size="md-10">
             <div id="main" className="center">
