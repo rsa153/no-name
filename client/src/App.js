@@ -6,7 +6,8 @@ import NoMatch from "./pages/NoMatch";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Pet from "./pages/Pet";
-import Hamburger from "./components/Nav";
+// import Hamburger from "./components/Nav";
+// import BottomAppBar from "./components/BottomNav";
 
 
 
@@ -15,7 +16,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Hamburger />
+        {/* <Hamburger /> */}
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
