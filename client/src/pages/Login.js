@@ -3,12 +3,12 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import API from "../utils/API";
 
 
- export default class Login extends Component {
+export default class Login extends Component {
   constructor(props) {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);  
+    this.handleChange = this.handleChange.bind(this);
 
      this.state = {
       loggedIn: false,
@@ -29,8 +29,15 @@ import API from "../utils/API";
 
    handleSubmit = event => {
     event.preventDefault();
-    API.getUser(this.props.match.params.id)
+    console.log("------- HAHA ----- handleSubmit Login up top ------")
+
+    // API.getUser(this.props.match.params.id)
+    API.logInUser({
+      email: this.state.email,
+      password: this.state.password
+    })
     .then(res => {
+      console.log("------- HAHA ----- API.loginUser ------")
       console.log(res.data.user.email)
       if (res.data.user.email) {
         console.log('THERE IS A USER')
@@ -45,7 +52,7 @@ import API from "../utils/API";
           email: null
         })
       }
-    }) 
+    })
   }
 
    render() {

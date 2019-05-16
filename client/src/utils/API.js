@@ -56,5 +56,14 @@ export default {
   // Saves user
   saveUser: function(userData) {
     return axios.post("/api/user", userData);
+  },
+  // Sign up user
+  signUpUser: function(userData) {
+    return axios.post("/api/user/signup", userData);
+  },
+  // Log in user
+  logInUser: function(userData) {
+    return axios.post("/api/user/login", userData);
   }
+
 };

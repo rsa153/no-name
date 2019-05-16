@@ -50,21 +50,22 @@ export default class Signup extends Component {
       alert("Passwords don't match");
       return false;
     } else if (this.state.password === this.state.cpassword) {
-      API.saveUser({
+      API.signUpUser({
         name: this.state.name,
         email: this.state.email,
-        password: this.state.password,
-        cpassword: this.state.cpassword
+        password: this.state.password
       }).then(res => {
-        if (!res.data.errmsg) {
+        console.log("------ HandleSubmit Sign Up ------")
+        console.log(res)
+        if (!res.data.error) {
           console.log('youre good');
           this.setState({
             redirectTo: '/user'
           })
         } else {
-        console.log('duplicate')
-          }
-          
+          console.log('duplicate')
+        }
+
         })
     }
   };

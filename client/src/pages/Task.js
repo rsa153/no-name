@@ -29,7 +29,7 @@ class Task extends Component {
     this.onDateChange = this.onDateChange.bind(this);
 
     this.state = {
-      user: "user 1",
+      user: "",
       todos: [],
       currentItem: { text: "", date: "" },
       today: new Date(),

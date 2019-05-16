@@ -9,70 +9,24 @@ import Pet from "./pages/Pet";
 import Hamburger from "./components/Nav";
 import Logout from "./pages/Logout";
 
-class App extends Component {
-  render() {
-    // if () {
-      return (
-        <Router>
-          <div>
-            <Hamburger />
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/Pet" component={Pet} />
-              <Route exact path="/Logout" component={Logout} />
-              <Route exact path="/Login" component={Login} />
-             <Route exact path="/Signup" component={Signup} />
-              <Route component={NoMatch} />
-            </Switch>
-          </div>
-        </Router>
-      );
-  //   } else {
-  //     return (
-  //       <Router>
-  //         <div>
-  //           <Hamburger />
-  //           <Switch>
-  //             <Route exact path="/" component={Home} />
-  
-  //             <Route component={NoMatch} />
-  //           </Switch>
-  //         </div>
-  //       </Router>
-  //     );
-  //   }
-  }
+
+function App() {
+  return (
+    <Router>
+      <div>
+        <Hamburger />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/pet" component={Pet} />
+          <Route exact path="/profile" component={Home} />
+          <Route exact path="/task" component={Task} />
+          <Route component={NoMatch} />
+        </Switch>
+      </div>
+    </Router>
+  );
 }
 
 export default App;
-
-//  render() {
-//     return (
-//       <div className="App">
-
-//         <Navbar updateUser={this.updateUser} loggedIn={this.state.loggedIn} />
-//         {/* greet user if logged in: */}
-//         {this.state.loggedIn &&
-//           <p>Join the party, {this.state.username}!</p>
-//         }
-//         {/* Routes to different components */}
-//         <Route
-//           exact path="/"
-//           component={Home} />
-//         <Route
-//           path="/login"
-//           render={() =>
-//             <LoginForm
-//               updateUser={this.updateUser}
-//             />}
-//         />
-//         <Route
-//           path="/signup"
-//           render={() =>
-//             <Signup/>}
-//         />
-
-//       </div>
-//     );
-//   }
-// }

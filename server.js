@@ -1,14 +1,13 @@
 const express = require("express");
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session)
 const passport = require("passport");
 const routes = require("./routes");
+const db = require("./server/db");
 const app = express();
 const PORT = process.env.PORT || 3001;
-
-const user = require("./routes/api/user");
-const auth = require('./routes/api/auth');
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -21,15 +20,28 @@ app.use(
 )
 app.use(bodyParser.json())
 
+// app.use(
+// 	session({
+// 		secret: "secret",
+// 		key: "site-cookie",
+// 		resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//         expires: 600000
+//     }
+// 	})
+// )
+
+
 app.use(
 	session({
-		secret: "secret",
-		key: "site-cookie",
-		resave: false, 
-    saveUninitialized: false,
-    cookie: {
-        expires: 600000
-    }
+		secret: process.env.APP_SECRET || 'this is the default passphrase',
+		store: new MongoStore({
+			mongooseConnection: db,
+			ttl: 1 * 24 * 60 * 60  // session expiration: 1 day
+		}),
+		resave: false,
+		saveUninitialized: false
 	})
 )
 
@@ -45,7 +57,7 @@ if (process.env.NODE_ENV === "production") {
 app.use(routes);
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/atomicmuffin");
+// const db = mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/atomicmuffin");
 
 // Start the API server
 app.listen(PORT, function() {
