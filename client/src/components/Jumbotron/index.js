@@ -23,12 +23,14 @@ function Jumbotron() {
         style={{
           fontSize: "50px",
           margin: "0px",
+          paddingTop: "20px",
           color: "#ffffff"
         }}
       >
         Lacking Motivation? Love Virtual Pets?
-        <p>Register for the app that gives you both: SupportYourPet  </p>
+        <h4>Register for the app that gives you both: PetMotivation for Task Management</h4>
       </div>
+      <div className = "pt-3">
       <Button
         style={{
           borderRadius: 35,
@@ -56,6 +58,7 @@ function Jumbotron() {
       >
         Sign In
       </Button>
+      </div>
     </div>
   );
 }

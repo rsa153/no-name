@@ -15,7 +15,7 @@ const styles = {
     height: 300,
   },
   media: {
-    height: 150,
+    height: 200,
   },
 };
 
