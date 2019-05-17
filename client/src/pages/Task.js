@@ -8,6 +8,8 @@ import { FormBtn } from "../components/Form";
 import { TodoForm, TodoListCard } from "../components/TodoList";
 import { DailyProgress } from "../components/User";
 import Header from "../components/Header";
+// David Testing Modal
+import Modal from 'react-responsive-modal';
 // const petsController = require("../../controllers/petsController");
 // import flower from "../images/ppfinal.jpg";
 
@@ -49,7 +51,8 @@ class Task extends Component {
       currentPet: "",
       dailyPercentComplete: 0,
       progressColor: "default",
-      view: "week"
+      view: "week",
+      state: false
     };
   }
 
@@ -86,6 +89,11 @@ class Task extends Component {
       .catch((err) => console.log(err));
   }
   
+  simulatePass() 
+  {
+    this.onOpenModal();
+  }
+
   loadCurrentPet() {
     API.getPet()
       .then((res) => {
@@ -133,10 +141,13 @@ class Task extends Component {
       .catch((err) => console.log(err));
   }
 
-  simulatePass () {
-
-    
-  }
+  onOpenModal = () => {
+    this.setState({ open: true });
+  };
+  
+  onCloseModal = () => {
+    this.setState({ open: false });
+  };
 
   loadTodosPerDate(date) {
     // load todos for selected date in calendar
@@ -217,7 +228,7 @@ class Task extends Component {
         let percentComplete = (dailyTask.countComplete / dailyTask.countTasks) * 100
         percentComplete = percentComplete.toFixed(2)
 
-        console.log("------- daily percentComplete -------")
+        console.log("------- daily percentComplete heee -------")
         console.log(percentComplete)
 
         // Set color for progress bar
@@ -229,7 +240,12 @@ class Task extends Component {
         } else if (percentComplete > 55 && percentComplete < 90) {
           color = "default";
         }
-        console.log(color)
+        // Adding my logic here
+        else if(percentComplete == 100.00)
+        {
+          this.simulatePass();
+        }
+        console.log(color);
 
         this.setState({
           dailyPercentComplete: percentComplete,
@@ -324,9 +340,21 @@ class Task extends Component {
   };
 
   render() {
+    const { open } = this.state;
+
     return (
       <Container fluid>
+        <div>
+        <Modal open={open} onClose={this.onCloseModal} center>
+          <br />
+          <br />
+          <p>You completed your tasks for the day!</p>
+          <p>Your pet has advanced a state!</p>
+          <br />
+        </Modal>
+      </div>
         <Row>
+          
           <Col size="md-12">
             <p>Welcome to your task page {this.state.user}</p> 
             <p>You last logged in {this.state.daysDifference} days ago on {this.state.lastLogin}</p>
@@ -421,3 +449,31 @@ class Task extends Component {
 }
 
 export default Task;
+
+
+
+
+
+// state = {
+//   open: false,
+// };
+
+// onOpenModal = () => {
+//   this.setState({ open: true });
+// };
+
+// onCloseModal = () => {
+//   this.setState({ open: false });
+// };
+
+// render() {
+//   const { open } = this.state;
+//   return (
+//     <div>
+//       <button onClick={this.onOpenModal}>Open modal</button>
+//       <Modal open={open} onClose={this.onCloseModal} center>
+//         <h2>Simple centered modal</h2>
+//       </Modal>
+//     </div>
+//   );
+// }

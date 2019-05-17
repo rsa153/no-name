@@ -63,6 +63,9 @@ export default {
   getPet: function() {
     return axios.get("/api/pets");
   },
+  advancePet: function() {
+    return axios.get("/api/advancePet");
+  }
   // failTasks: function(currentPet) {
   //   return axios.post("/api/pets/failTasks", currentPet);
   // }
