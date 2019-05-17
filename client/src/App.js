@@ -29,9 +29,6 @@ function App() {
   return (
     <Router>
       <div>
-        {/* <Hamburger /> */}
-
-        <ButtonAppBar />
 
         <Switch>
           <Route exact path="/" component={Home} />
