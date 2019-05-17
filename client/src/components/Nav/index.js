@@ -1,3 +1,4 @@
+
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -9,6 +10,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import API from "../../utils/API";
 import "./index.css";
+import "./styles.css";
+import SideBar from "./sidebar"
+import ClassNames from "./Nav"
 
 
 const styles = {
@@ -49,31 +53,17 @@ class ButtonAppBar extends Component {
       })
   }
 
-
+class NavbarPage extends Component {
+  
   render() {
     return (
-      <div className={this.props.classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton className={this.props.classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" color="inherit" className={this.props.classes.grow}>
-              PetSurvival 101
-            </Typography>
-
-            <Button type="submit" onClick={this.handleClick}> Logout </Button>
-
-          </Toolbar>
-        </AppBar>
+      <div className="Navbar">
+        <SideBar />
+       <Button type="submit" onClick={this.handleClick}> Logout </Button>
+        <ClassNames />
       </div>
     );
   }
 }
 
-
-ButtonAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(ButtonAppBar);
+export default NavbarPage;
