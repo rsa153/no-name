@@ -50,11 +50,16 @@ module.exports = {
       console.log(userMatch)
       if (err) {
         console.log("User signUp error: ", err)
+        res.redirect("/signup")
+
       } else if (userMatch) {
         console.log(" --- uh oh --- existing user Match ----- ")
-        return res.json({
-          error: `Sorry, already a user with the email: ${email}`
-        })
+        res.redirect("/signup")
+
+        // return res.json({
+        //   error: `Sorry, already a user with the email: ${email}`
+        // })
+
       } else {
         console.log("------ HAHA ------- userController create here -----")
         console.log(req.body)
@@ -91,6 +96,22 @@ module.exports = {
           user: cleanUser
         })
       }
+  },
+
+  logOut: function(req, res) {
+    if (req.user) {
+      req.session.destroy()
+      res.clearCookie('connect.sid') // clean up!
+      return res.json({
+        msg: 'logging you out'
+      })
+      // res.redirect('/login')
+    } else {
+      return res.json({
+        msg: 'no user to log out!'
+      })
+      // res.redirect('/login')
+    }
   },
 
   update: function(req, res) {

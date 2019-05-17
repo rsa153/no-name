@@ -44,8 +44,9 @@ export default class Login extends Component {
         this.setState({
           loggedIn: true,
           email: res.data.user.email,
-          redirectTo:"/"
+          redirectTo:"/task"
         })
+
       } else {
         this.setState({
           loggedIn: false,

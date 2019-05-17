@@ -8,12 +8,18 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap';
+import { Button } from "react-bootstrap";
+import API from "../../utils/API";
+
 
 export default class Hamburger extends React.Component {
   constructor(props) {
     super(props);
 
+    this.handleClick = this.handleClick.bind(this);
+
     this.toggle = this.toggle.bind(this);
+
     this.state = {
       isOpen: false
     };
@@ -23,6 +29,19 @@ export default class Hamburger extends React.Component {
       isOpen: !this.state.isOpen
     });
   }
+
+  handleClick = event => {
+    event.preventDefault();
+    console.log("------- HAHA ----- handleClik Logout up top ------")
+    API.logOutUser()
+      .then(res => {
+        console.log("------- HAHA ----- API.logoutUser ------")
+        console.log(res.data)
+      })
+  }
+
+
+
   render() {
     return (
       <div>
@@ -44,6 +63,11 @@ export default class Hamburger extends React.Component {
             <NavItem>
               <NavLink href="/login">Log In</NavLink>
             </NavItem>
+
+            <Button type="submit" onClick={this.handleClick}>
+              Logout
+            </Button>
+
             </Nav>
           </Collapse>
         </Navbar>

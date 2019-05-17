@@ -19,6 +19,7 @@ module.exports = {
     }
     db.Task
       // .find(req.query)
+      // .populate('user')
       .aggregate([
         { $match: {
             // dateDue: req.query.dateDue,
@@ -26,7 +27,7 @@ module.exports = {
               "$gte": new Date(req.query.dateDue.$gte),
               "$lte": new Date(req.query.dateDue.$lte)
             },
-            // email: req.user.email
+            user: req.user._id
         }},
         { $group : {
           _id : { month: { $month: "$dateDue" }, day: { $dayOfMonth: "$dateDue" }, year: { $year: "$dateDue" } },
@@ -52,7 +53,7 @@ module.exports = {
       req.query.dateDue = JSON.parse(req.query.dateDue)
     }
     db.Task
-      // .find(req.query)
+      // .populate('user')
       .aggregate([
         { $match: {
             // dateDue: req.query.dateDue,
@@ -60,7 +61,7 @@ module.exports = {
               "$gte": new Date(req.query.dateDue.$gte),
               "$lte": new Date(req.query.dateDue.$lte)
             },
-            // email: req.user.email
+            user: req.user._id
         }},
         { $group : {
           _id : { month: { $month: "$dateDue" }, day: { $dayOfMonth: "$dateDue" }, year: { $year: "$dateDue" } },
@@ -84,6 +85,16 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
+    console.log("----- tasksController --- create ----")
+    console.log("checking user")
+    console.log(req.user)
+    console.log("------ req.body before -----")
+    console.log(req.body)
+    req.body.user = req.user._id
+
+    console.log("------ req.body after -----")
+    console.log(req.body)
+
     db.Task
       .create(req.body)
       .then(dbModel => res.json(dbModel))
