@@ -15,15 +15,15 @@ export default props => {
         Choose your pet
       </a>
 
-      <a className="menu-item" href="/tasks">
+      <a className="menu-item" href="/task">
         Tasks
       </a>
 
-      <a className="menu-item" href="/tasks">
+      <a className="menu-item" href="/task">
         Today's Tasks
       </a>
 
-      <a className="menu-item" href="/tasks">
+      <a className="menu-item" href="/task">
         This week's tasks
       </a>
 
