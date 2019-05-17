@@ -26,7 +26,6 @@ function MediaCard(props) {
         <CardMedia
           className={classes.media}
           image={props.image}
-          // style={{borderColor: "#FE6B8B", borderWidth:3}}
           title="Flower"
         />
         <CardContent>
