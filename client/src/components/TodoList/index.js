@@ -81,7 +81,12 @@ class TodoItem extends React.Component {
         <div className={todoClass}>
           <span className="fas fa-check" aria-hidden="true" onClick={this.onClickDone}></span>
           {this.props.item.name}
+
+          {/* ---- HAHA remove this when done ---- DEBUG only */}
           <br/> created at: {setTime(this.props.item.dateCreated)}
+          <br/> due at: {setTime(this.props.item.dateDue)}
+
+
           <DeleteBtn type="button" className="close" onClick={this.onClickClose}/>
         </div>
       </li>
