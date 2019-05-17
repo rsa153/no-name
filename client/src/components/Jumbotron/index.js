@@ -12,31 +12,31 @@ class Jumbotron extends React.Component {
       showSignupModal: false,
       showSigninModal: false
     };
-
+    
     this.handleOpenSignupModal = this.handleOpenSignupModal.bind(this);
     this.handleCloseSignupModal = this.handleCloseSignupModal.bind(this);
     this.handleOpenSigninModal = this.handleOpenSigninModal.bind(this);
     this.handleCloseSigninModal = this.handleCloseSigninModal.bind(this);
   }
-
+  
   handleOpenSignupModal () {
     this.setState({ showSignupModal: true });
   }
-
+  
   handleCloseSignupModal () {
     this.setState({ showSignupModal: false });
   }
   handleOpenSigninModal () {
     this.setState({ showSigninModal: true });
   }
-
+  
   handleCloseSigninModal () {
     this.setState({ showSigninModal: false });
   }
 
   render () {
   return (
-
+    
     <div
       style={{
         height: 275,
@@ -62,7 +62,7 @@ class Jumbotron extends React.Component {
         Lacking Motivation? Love Virtual Pets?
         <h4>Register for the app that gives you both: PetMotivation for Task Management</h4>
       </div>
-
+      
       <div className = "pt-3">
       <Button
         style={{
@@ -77,7 +77,7 @@ class Jumbotron extends React.Component {
         onClick={this.handleOpenSignupModal} >
         Sign Up
       </Button>
-      <ReactModal
+      <ReactModal 
            isOpen={this.state.showSignupModal}
            contentLabel="Sign Up"
         >
@@ -88,9 +88,9 @@ class Jumbotron extends React.Component {
           }}>
             X</button>
           <Signup  />
-
+          
       </ReactModal>
-
+        
       <Button
         style={{
           borderRadius: 35,
@@ -101,12 +101,12 @@ class Jumbotron extends React.Component {
           margin: "20px"
         }}
         variant="contained"
-        onClick={this.handleOpenSigninModal}
+        onClick={this.handleOpenSigninModal} 
       >
-        Log In
+        Sign In
       </Button>
 
-      <ReactModal
+      <ReactModal 
            isOpen={this.state.showSigninModal}
         >
           <button onClick={this.handleCloseSigninModal}
@@ -116,7 +116,7 @@ class Jumbotron extends React.Component {
           }}>
             X</button>
           <Login />
-
+          
       </ReactModal>
       </div>
     </div>

@@ -34,7 +34,7 @@ class Task extends Component {
     this.onDateChange = this.onDateChange.bind(this);
 
     this.state = {
-      user: "",
+      user: "user 1",
       todos: [],
       currentItem: { text: "", date: "" },
       today: new Date(),
@@ -55,7 +55,6 @@ class Task extends Component {
     console.log("------- loadTodosPerDate -------")
     const query = {
       dateDue: {
-
         "$gte": moment(date).startOf('day').toDate(),
         "$lte": moment(date).endOf('day').toDate()
       },
@@ -80,7 +79,6 @@ class Task extends Component {
 
     const query = {
       dateDue: {
-
         "$gte": moment(date).subtract(3, 'days').startOf('day').toDate(),
         "$lte": moment(date).add(3, 'days').endOf('day').toDate()
       },
@@ -195,7 +193,6 @@ class Task extends Component {
     }
     const dateDiff = moment(this.state.today).diff(moment(todoItem.dateDue), "days")
 
-
     if (dateDiff === 0) {
       // Only able to mark todo complete for today's date
       API.updateTask(itemId, taskData)
@@ -230,8 +227,7 @@ class Task extends Component {
     const currentItem = {
       user: this.state.user,
       text: itemText,
-      dateDue: moment(this.state.date).endOf('day').toDate(),
-
+      dateDue: this.state.date,
       dateCreated: this.state.today
     }
     this.setState({
