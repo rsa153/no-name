@@ -42,14 +42,14 @@ const tasksSeed = [
     name: "swim at the lake",
     isComplete: false,
     dateCreated: new Date(2019, 4, 15),
-    dateDue: new Date(2019, 4, 15),
+    dateDue: new Date(2019, 4, 16),
   },
   {
     user: "user 1",
     name: "drink coffee",
     isComplete: false,
     dateCreated: new Date(2019, 4, 15),
-    dateDue: new Date(2019, 4, 15),
+    dateDue: new Date(2019, 4, 16),
   }
 ];
 
@@ -71,7 +71,7 @@ db.Task
       email: "d@yahoo.com",
       password: "123",
       isLoggedIn: "true",
-      lastLogin: "",
+      lastLogin: "Mon May 13 2019",
       lastLogout: ""
     }
   ];
@@ -91,8 +91,8 @@ db.User
 
 const petsSeed = [
   {
-    name: "Flower 1",
-    url: "flower1.png",
+    name: "Flower 0",
+    url: "seed.jpg",
     userEmail: "d@yahoo.com"
     // dateCreated: new Date().getDate().toString()
   }
