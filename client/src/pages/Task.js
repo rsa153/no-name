@@ -241,9 +241,14 @@ class Task extends Component {
 
   render() {
     return (
-      <div>
+        <div className="Pet" style={{
+        background: "#FAF0BA",
+        minHeight: "100vh",
+        resizeMode: 'cover',
+      }}>
           <NavbarPage />
-   
+        
+      
       <Container fluid>
         
         <Header

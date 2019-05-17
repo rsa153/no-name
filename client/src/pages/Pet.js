@@ -9,7 +9,6 @@ import flower2 from "../images/ChoosePet/flower2.jpg";
 import NavbarPage from "../components/Nav";
 import CardButton from "../components/Card";
 
-
 class Pet extends Component {
   myfunction() {
     console.log("CLICKED");
@@ -21,7 +20,7 @@ class Pet extends Component {
         minHeight: "100vh",
         resizeMode: 'cover',
       }}>
-      
+
         <NavbarPage />
         
         <Container style={{padding: "0px", margin: "0px"}}>
