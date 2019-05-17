@@ -7,6 +7,7 @@ import checklist from "../images/checklist.png";
 import animals from "../images/Animals.jpg";
 import grow from "../images/grow.jpg";
 import { MDBFooter } from "mdbreact";
+// import ExampleApp from "../components/LoginModal";
 
 class Home extends Component {
   state = {
@@ -18,7 +19,7 @@ class Home extends Component {
     return (
       <div
         style={{
-          backgroundColor: "#FAF0BA",
+          background: "#FAF0BA",
           minHeight: "100%",
           resizeMode: 'cover',
         }}
@@ -26,6 +27,7 @@ class Home extends Component {
 
         <Jumbotron />
 
+       {/* <ExampleApp /> */}
         <Row>
           <Col size="md-3">
             <MediaCard
@@ -71,81 +73,13 @@ class Home extends Component {
             position: "absolute",
             // bottom: "0",
             width: "100%"
-
           }}
         >
-        
+  
           <div className="footer-copyright text-center">© 2019 Copyright</div>
         </MDBFooter>
         <br />
-
-        {/* </Container> */}
       </div>
-
-      // {/* </MediaCard> */}
-      // {/* <Grid container spacing={32}>
-
-      //   <Grid item md={3}>
-      //     <Card>
-      //       <Header title={`Home Title`} subtitle={`This is Home subtile`} />
-      //     </Card>
-      //   </Grid>
-
-      //   <Grid item md={3}>
-      //     <Header title={`Home Title`} subtitle={`This is Home subtile`} />
-      //   </Grid>
-      // </Grid> */}
-      // {/* <div>
-      // <Row>
-      // <Card>
-      //   <Col size="md-3 pl-2">
-      //   <Header
-      //     title={`Home Title`}
-      //     subtitle={`This is Home subtile`}
-      //   />
-      //   </Col>
-      //   </Card>
-      //   <Card>
-      //   <Col size="md-3">
-      //   <Header
-      //     title={`Home Title`}
-      //     subtitle={`This is Home subtile`}
-      //   />
-      //   </Col>
-      //   </Card>
-      //   <Card>
-      //   <Col size="md-3">
-      //   <Header
-      //     title={`Home Title`}
-      //     subtitle={`This is Home subtile`}
-      //   />
-      //   </Col>
-      //   </Card>
-      // </Row>
-      // </div>
-      // <Row>
-      //   <Col size="md-10 md-offset-1">
-      //     <article>
-      //       <h1>Members</h1>
-      //       <List>
-      //         {this.state.members.map((member)  => (
-      //           <ListItem key={member._id}>
-      //             <Link to={"/members/" + member._id}>
-      //               <strong>{member.email}</strong>
-      //             </Link>
-      //             <DeleteBtn onClick={() => this.deleteMember(member._id)} />
-      //           </ListItem>
-      //         ))}
-      //       </List>
-      //     </article>
-      //   </Col>
-      // </Row>
-
-      // <Row>
-      //   <Col size="md-2">
-      //     <Link to="/">← Back to Home</Link>
-      //   </Col>
-      // </Row> */}
     );
   }
 }
