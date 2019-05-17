@@ -102,7 +102,7 @@ import API from "../../utils/API";
                 padding: "15px 36px",
                 fontSize: "18px",
                 color: "white",
-                margin: "30px",
+                margin: "0px",
                 fontWeight: "bold"
                 // width: "50%",
                 // justifyContent: 'center',
