@@ -42,8 +42,8 @@ export default {
     return axios.post("/api/tasks", taskData);
   },
    // Gets all existing users
-   getUser: function() {
-    return axios.get("/api/user");
+  getUser: function(email) {
+    return axios.get("/api/user" + email);
   },
   // Gets user with given id
   getUserId: function(id) {
@@ -56,5 +56,18 @@ export default {
   // Saves user
   saveUser: function(userData) {
     return axios.post("/api/user", userData);
+  },
+  // Sign up user
+  signUpUser: function(userData) {
+    return axios.post("/api/user/signup", userData);
+  },
+  // Log in user
+  logInUser: function(userData) {
+    return axios.post("/api/user/login", userData);
+  },
+  // Log out user
+  logOutUser: function(userData) {
+    return axios.post("/api/user/logout", userData);
   }
+
 };
