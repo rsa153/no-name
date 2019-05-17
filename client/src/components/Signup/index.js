@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Redirect } from 'react-router-dom'
 import API from "../../utils/API";
 
- export default class Signup extends Component {
+export default class Signup extends Component {
   constructor(props) {
     super(props);
 
@@ -10,45 +11,68 @@ import API from "../../utils/API";
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
-     this.state = {
-        name: "",
-        email: "",
-        password: "",
-        cpassword:"",
+    this.state = {
+      name: "",
+      email: "",
+      password: "",
+      cpassword: "",
+      errors: {},
+      redirectTo: null
     };
   }
 
-   validateForm() {
-    return this.state.name.length > 0 && this.state.email.length > 0 && this.state.password.length > 0 && this.state.cpassword.length > 0;
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
   }
 
-   handleChange = event => {
+  validateForm() {
+    return (
+      this.state.name.length > 0 &&
+      this.state.email.length > 0 &&
+      this.state.password.length > 0 &&
+      this.state.cpassword.length > 0
+    );
+  }
+
+  handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
-  }
+  };
 
-   handleSubmit = event => {
+  handleSubmit = event => {
     event.preventDefault();
     if (this.state.password !== this.state.cpassword) {
-        alert("Passwords don't match");
-        return false;
+      alert("Passwords don't match");
+      return false;
     } else if (this.state.password === this.state.cpassword) {
-        alert("Passwords do match");
-          API.saveUser({
-            name: this.state.name,
-            email: this.state.email,
-            password: this.state.password,
-            cpassword: this.state.cpassword
+      API.signUpUser({
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password
+      }).then(res => {
+        console.log("------ HandleSubmit Sign Up ------")
+        console.log(res)
+        if (!res.data.error) {
+          console.log('youre good');
+          this.setState({
+            redirectTo: '/user'
           })
-            // .then(res => this.loadGroups())
-            .catch(err => console.log(err));
+        } else {
+          console.log('duplicate')
         }
-      }; 
 
-   render() {
+        })
+    }
+  };
+
+  render() {
     return (
-    
+
       <div className="Sign-up p-2" >
         <h3 className = "text-center" style = {{color:"#0B92C8"}}>Please fill out all the fields in this form and submit to get started!</h3>
         <br />
@@ -64,7 +88,7 @@ import API from "../../utils/API";
             />
           </FormGroup>
 
-           <FormGroup controlId="email">
+          <FormGroup controlId="email">
             <FormLabel>Email</FormLabel>
             <FormControl
               autoFocus
@@ -74,7 +98,7 @@ import API from "../../utils/API";
             />
           </FormGroup>
 
-           <FormGroup controlId="password">
+          <FormGroup controlId="password">
             <FormLabel>Password</FormLabel>
             <FormControl
               value={this.state.password}
@@ -83,7 +107,7 @@ import API from "../../utils/API";
             />
           </FormGroup>
 
-           <FormGroup controlId="cpassword">
+          <FormGroup controlId="cpassword">
             <FormLabel>Confirm Password</FormLabel>
             <FormControl
               value={this.state.cpassword}
@@ -92,8 +116,9 @@ import API from "../../utils/API";
             />
           </FormGroup>
 
-           <Button
+          <Button
             block
+            onClick={this.handleSubmit}
             disabled={!this.validateForm()}
             type="submit"
             style = {{

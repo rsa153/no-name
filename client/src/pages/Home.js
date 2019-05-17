@@ -69,7 +69,7 @@ class Home extends Component {
             width: "100%"
           }}
         >
-  
+
           <div className="footer-copyright text-center">© 2019 Copyright</div>
         </MDBFooter>
         <br />
