@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import { Redirect } from 'react-router-dom'
-import API from "../utils/API";
+import API from "../../utils/API";
 
 export default class Signup extends Component {
   constructor(props) {
@@ -72,9 +72,13 @@ export default class Signup extends Component {
 
   render() {
     return (
-      <div className="Sign-up">
+
+      <div className="Sign-up p-2" >
+        <h3 className = "text-center" style = {{color:"#0B92C8"}}>Please fill out all the fields in this form and submit to get started!</h3>
+        <br />
         <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="name">
+
+         <FormGroup controlId="name">
             <FormLabel>Name</FormLabel>
             <FormControl
               autoFocus
@@ -117,6 +121,19 @@ export default class Signup extends Component {
             onClick={this.handleSubmit}
             disabled={!this.validateForm()}
             type="submit"
+            style = {{
+                borderRadius: 35,
+                background: "linear-gradient(45deg, #ff0080 30%, #0B92C8 90%)",
+                padding: "15px 36px",
+                fontSize: "18px",
+                color: "white",
+                margin: "0px",
+                fontWeight: "bold"
+                // width: "50%",
+                // justifyContent: 'center',
+                // flex:1,
+                // alignItems: 'center'
+            }}
           >
             Sign Up
           </Button>

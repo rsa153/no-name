@@ -1,33 +1,42 @@
-import React from "react";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-} from 'reactstrap';
-import { Button } from "react-bootstrap";
+import React, { Component } from "react";
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 import API from "../../utils/API";
+import "./index.css";
 
 
-export default class Hamburger extends React.Component {
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+  // ---- HAHA ---- need to debug this, returns error with colors undefined
+  // AppBar:{
+  //   color: colors.purple
+  // }
+};
+
+class ButtonAppBar extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.handleClick = this.handleClick.bind(this);
 
-    this.toggle = this.toggle.bind(this);
-
     this.state = {
-      isOpen: false
+      isLoggedIn: false,
     };
-  }
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
   }
 
   handleClick = event => {
@@ -41,54 +50,30 @@ export default class Hamburger extends React.Component {
   }
 
 
-
   render() {
     return (
-      <div>
-        <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">Save Your Pets</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-            <NavItem>
-              <NavLink href="/task">Task</NavLink>
-            </NavItem>
+      <div className={this.props.classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton className={this.props.classes.menuButton} color="inherit" aria-label="Menu">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" className={this.props.classes.grow}>
+              PetSurvival 101
+            </Typography>
 
-            <NavItem>
-              <NavLink href="/pet">Choose Pet</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/signup">Sign Up</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/login">Log In</NavLink>
-            </NavItem>
+            <Button type="submit" onClick={this.handleClick}> Logout </Button>
 
-            <Button type="submit" onClick={this.handleClick}>
-              Logout
-            </Button>
-
-            </Nav>
-          </Collapse>
-        </Navbar>
+          </Toolbar>
+        </AppBar>
       </div>
     );
   }
 }
 
-// function Nav() {
-//   return (
-//     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-//       <div className = "ml-auto mt-2 navbar-brand">
-//         <NavLink className="navbar-brand" to="/profile" activeClassName="active"><h5>Profile</h5></NavLink>
-//         <NavLink className="navbar-brand" to="/createGroup" activeClassName="active"><h5>Create Group</h5></NavLink>
 
-//         {/* sample things -- remove when not used anymore */}
-//         <NavLink className="navbar-brand" to="/signup" activeClassName="active"><h5>Sign Up</h5></NavLink>
-//         <NavLink className="navbar-brand" to="/login" activeClassName="active"><h5>Login</h5></NavLink>
-//       </div>
-//     </nav>
-//   );
-// }
+ButtonAppBar.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
-// export default Nav;
+export default withStyles(styles)(ButtonAppBar);
