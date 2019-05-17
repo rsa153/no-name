@@ -1,15 +1,9 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import API from "../../utils/API";
-
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.validateForm = this.validateForm.bind(this);
 
     this.state = {
       email: "",
@@ -29,30 +23,6 @@ export default class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-
-    console.log("------- HAHA ----- handleSubmit Login up top ------")
-    API.logInUser({
-      email: this.state.email,
-      password: this.state.password
-    })
-    .then(res => {
-      console.log("------- HAHA ----- API.loginUser ------")
-      console.log(res.data.user.email)
-      if (res.data.user.email) {
-        console.log('THERE IS A USER')
-        this.setState({
-          loggedIn: true,
-          email: res.data.user.email,
-          redirectTo:"/task"
-        })
-
-      } else {
-        this.setState({
-          loggedIn: false,
-          email: null
-        })
-      }
-    })
   };
 
   render() {
@@ -64,9 +34,7 @@ export default class Login extends Component {
         </h3>
         <br />
         <form onSubmit={this.handleSubmit}>
-
-          {/* <FormGroup controlId="email" bsSize="large"> */}
-          <FormGroup controlId="email">
+          <FormGroup controlId="email" bsSize="large">
             <FormLabel>Email</FormLabel>
             <FormControl
               autoFocus
@@ -76,8 +44,7 @@ export default class Login extends Component {
             />
           </FormGroup>
 
-          {/* <FormGroup controlId="password" bsSize="large"> */}
-          <FormGroup controlId="password">
+          <FormGroup controlId="password" bsSize="large">
             <FormLabel>Password</FormLabel>
             <FormControl
               value={this.state.password}
@@ -109,7 +76,7 @@ export default class Login extends Component {
             If you don't already have an account and would like to create one, please press "X" in the upper left corner to close this screen and click the "Sign up"
             button
           </h5>
-
+            
         </form>
       </div>
     );
