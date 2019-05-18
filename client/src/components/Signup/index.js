@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import { Redirect } from 'react-router-dom'
 import API from "../../utils/API";
 import {  withRouter} from 'react-router-dom';
+
  class Signup extends Component {
   constructor(props) {
     super(props);
@@ -61,7 +61,6 @@ import {  withRouter} from 'react-router-dom';
         console.log("------ HandleSubmit Sign Up ------")
         console.log(res)
         if (!res.data.error) {
-          // return <Redirect to='/pet' />;
           console.log('youre good');
           this.setState({
             redirectTo: '/pet',
