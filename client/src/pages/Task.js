@@ -66,24 +66,26 @@ class Task extends Component {
   }
 
   handleCloseTasksCompletionModal () {
-    var petURL = "";
+    var src = "";
     
     if(this.state.currentPet == "stage1.jpg")
     {
-      petURL = "stage2.jpg";
+      src = "stage2.jpg";
     }
     else if(this.state.currentPet == "stage2.jpg")
     {
-      petURL = "stage3.jpg";
+      src = "stage3.jpg";
     }
     else if(this.state.currentPet == "stage3.jpg")
     {
-      petURL = "stage4.jpg";
+      src = "stage4.jpg";
     }
     else
     {
-      petURL = "sflower3.jpg";
+      src = "sflower3.jpg";
     }
+
+    petURL = require('../images/Grow/' + src);
 
     this.setState({ showTasksCompletionModal: false, currentPet: petURL });
   }
