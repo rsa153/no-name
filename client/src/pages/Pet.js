@@ -1,24 +1,23 @@
 import React, { Component } from "react";
 import { Col, Row, Container } from "react-bootstrap";
-// import { Image } from "../components/Images";
-// import flower1 from "../images/ChoosePet/flower1.jpg";
-import flower2 from "../images/ChoosePet/flower2.jpg";
-// import flower3 from "../images/ChoosePet/flower3.jpg";
-// import flower4 from "../images/ChoosePet/flower4.jpg";
-// import flower5 from "../images/ChoosePet/flower5.jpg";
+import flower1 from "../images/ChoosePet/Flower/flower1.jpg";
+import flower2 from "../images/ChoosePet/Flower/flower2.jpg";
+import flower3 from "../images/ChoosePet/Flower/flower3.jpg";
+import flower4 from "../images/ChoosePet/Flower/flower4.jpg";
+import flower5 from "../images/ChoosePet/Flower/flower5.jpg";
 import NavbarPage from "../components/Nav";
 import CardButton from "../components/CardButton";
 import { MDBFooter } from "mdbreact";
 import CardButtonDisabled from "../components/CardButtonDisabled";
 import fish1 from "../images/ChoosePet/Fish/fish1.jpeg";
 import fish2 from "../images/ChoosePet/Fish/fish2.png";
-import fish3 from "../images/ChoosePet/Fish/fish3.jpeg";
+import fish3 from "../images/ChoosePet/Fish/fish3.jpg";
 import fish4 from "../images/ChoosePet/Fish/fish4.jpeg";
 import fish5 from "../images/ChoosePet/Fish/fish5.jpeg";
 import bird1 from "../images/ChoosePet/Bird/bird1.jpeg";
-import bird2 from "../images/ChoosePet/Bird/bird2.png";
+import bird2 from "../images/ChoosePet/Bird/bird2.jpeg";
 import bird3 from "../images/ChoosePet/Bird/bird3.jpeg";
-import bird4 from "../images/ChoosePet/Bird/bird4.jpeg";
+import bird4 from "../images/ChoosePet/Bird/bird4.png";
 import bird5 from "../images/ChoosePet/Bird/bird5.jpeg";
 import cat1 from "../images/ChoosePet/Cat/cat1.jpeg";
 import cat2 from "../images/ChoosePet/Cat/cat2.jpeg";
@@ -65,7 +64,7 @@ class Pet extends Component {
             <CardButton style={{
               color: "#696969"
             }}
-            image ={flower2}/>
+            image ={flower1}/>
             </Col>
             <Col>
             <CardButton 
@@ -73,15 +72,15 @@ class Pet extends Component {
             </Col>
             <Col>
             <CardButton 
-            image ={flower2}/>
+            image ={flower3}/>
             </Col>
             <Col>
             <CardButton 
-            image ={flower2}/>
+            image ={flower4}/>
             </Col>
             <Col>
             <CardButton 
-            image ={flower2}/>
+            image ={flower5}/>
             </Col>
             
           </Row>
