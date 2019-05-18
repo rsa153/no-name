@@ -41,7 +41,7 @@ class DailyProgress extends Component {
     return (
       <div>
 
-        <h5> Daily Percent Complete of {setTime(this.props.today)}</h5>
+        <h5> Daily Percent Complete of {setDateMongo(this.props.today)}</h5>
 
         {/* <ProgressBar now={this.props.percent} label={`${this.props.percent}%`} /> */}
 
