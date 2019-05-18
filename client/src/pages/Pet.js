@@ -64,7 +64,7 @@ class Pet extends Component {
             <CardButton style={{
               color: "#696969"
             }}
-            image ={flower1}/>
+            image ={flower1} />
             </Col>
             <Col>
             <CardButton 

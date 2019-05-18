@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Calendar from 'react-calendar';
 // import Card from 'react-bootstrap/Card';
 import API from "../utils/API";
+import ReactModal from "react-modal";
 // import { setDate, setDateMongo } from "../utils/helpers";
 import { Col, Row, Container } from "../components/Grid";
 import { FormBtn } from "../components/Form";
@@ -35,6 +36,9 @@ class Task extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onDateChange = this.onDateChange.bind(this);
 
+    this.handleOpenTasksCompletionModal = this.handleOpenTasksCompletionModal.bind(this);
+    this.handleCloseTasksCompletionModal = this.handleCloseTasksCompletionModal.bind(this);
+
     this.state = {
       userName: "",
       userID: "",
@@ -45,15 +49,43 @@ class Task extends Component {
       currentPet: "",
       dailyPercentComplete: 0,
       progressColor: "default",
-      view: "week"
+      view: "week",
+      showTasksCompletionModal: false
     };
   }
 
   componentDidMount() {
     this.getDailyPercentComplete(this.state.today);
     this.loadTodosByDateWeekly(this.state.today);
-    this.loadCurrentUser();
+    // this.loadCurrentUser();
     this.loadCurrentPet();
+  }
+
+  handleOpenTasksCompletionModal () {
+    this.setState({ showTasksCompletionModal: true });
+  }
+
+  handleCloseTasksCompletionModal () {
+    var petURL = "";
+    
+    if(this.state.currentPet == "stage1.jpg")
+    {
+      petURL = "stage2.jpg";
+    }
+    else if(this.state.currentPet == "stage2.jpg")
+    {
+      petURL = "stage3.jpg";
+    }
+    else if(this.state.currentPet == "stage3.jpg")
+    {
+      petURL = "stage4.jpg";
+    }
+    else
+    {
+      petURL = "sflower3.jpg";
+    }
+
+    this.setState({ showTasksCompletionModal: false, currentPet: petURL });
   }
 
   loadCurrentUser() {
@@ -102,6 +134,8 @@ class Task extends Component {
     console.log(this.state);
     API.getPet()
       .then((res) => {
+        console.log(" ---- loadCurrentPet---")
+        console.log(res.data)
 
         const petURL = require('../images/Grow/' + res.data.url);
 
@@ -117,7 +151,6 @@ class Task extends Component {
     console.log("------- loadTodosPerDate -------")
     const query = {
       dateDue: {
-
         "$gte": moment(date).startOf('day').toDate(),
         "$lte": moment(date).endOf('day').toDate()
       },
@@ -205,6 +238,10 @@ class Task extends Component {
         } else if (percentComplete > 55 && percentComplete < 90) {
           color = "default";
         }
+        else if(percentComplete == 100)
+        {
+          this.handleOpenTasksCompletionModal();
+        }
         console.log(color)
 
         this.setState({
@@ -288,12 +325,16 @@ class Task extends Component {
   };
 
   handleTodoInputChange = event => {
+
+    // Future development: customize timezone
+    // Assume Chicago area for now
+    // Mongodb stores in utc by default, adjust utcOffset
+    const dateDueUtcOffset = moment(this.state.date).endOf('day').subtract(5, 'hours').format()
     const itemText = event.target.value
     const currentItem = {
       user: this.state.user,
       text: itemText,
-      dateDue: moment(this.state.date).endOf('day').toDate(),
-
+      dateDue: dateDueUtcOffset,
       dateCreated: this.state.today
     }
     this.setState({
@@ -309,15 +350,15 @@ class Task extends Component {
         resizeMode: 'cover',
       }}>
           <NavbarPage />
-        
-      
+
+
       <Container fluid>
       <div><img src={this.state.currentPet} alt="TEST"/></div>
         <Header
           title={`Create ToDos`}
           subtitle={`Create ToDos subtitle`}
         />
-        
+
         <Row>
           <Col size="md-10">
             <div id="main" className="center mb-3">
@@ -388,6 +429,20 @@ class Task extends Component {
           </Col>
         </Row>
       </Container>
+
+        <ReactModal
+            isOpen={this.state.showTasksCompletionModal}
+            contentLabel="Congrats! You finished your daily tasks!"
+          >
+            <p>Congrats! You finished your tasks for the day!</p>
+            <button onClick={this.handleCloseTasksCompletionModal}
+            style = {{
+              color: "#0B92C8",
+              fontWeight: "bolder"
+            }}>
+              X</button>
+
+        </ReactModal>
       </div>
     );
   }
