@@ -1,32 +1,41 @@
 import React from "react";
 import { slide as Menu } from "react-burger-menu";
+import API from "../../utils/API";
 
-export default props => {
-  return (
-    // Pass on our props
-    <Menu {...props}>
-       <a className="menu-item" href="/logout">
-        Logout
-      </a>
-      
-    <p>______________________________</p>
 
-      <a className="menu-item" href="/pet">
-        Choose your pet
-      </a>
+class Sidebar extends React.Component {
 
-      <a className="menu-item" href="/task">
-        Tasks
-      </a>
+  constructor(props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this);
+  }
 
-      <a className="menu-item" href="/task">
-        Today's Tasks
-      </a>
+  handleClick = event => {
+    event.preventDefault();
+    console.log("------- HAHA ----- handleClik Logout up top ------")
+    API.logOutUser()
+      .then(res => {
+        console.log("------- HAHA ----- API.logoutUser ------")
+        console.log(res.data)
+      })
+  }
 
-      <a className="menu-item" href="/task">
-        This week's tasks
-      </a>
+  render() {
+    return (
 
-    </Menu>
-  );
-};
+      <Menu>
+        {/* HAHA --- need to do redirect here please */}
+        <a className="menu-item" href="/logout" onClick={this.handleClick}>Logout</a>
+        <p>______________________________</p>
+
+        <a className="menu-item" href="/pet">Choose your pet</a>
+        <a className="menu-item" href="/task">Tasks</a>
+        <a className="menu-item" href="/task">Today's Tasks</a>
+        <a className="menu-item" href="/task">This week's tasks</a>
+
+      </Menu>
+    );
+  }
+}
+
+export default Sidebar;

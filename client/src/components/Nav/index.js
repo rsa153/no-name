@@ -5,7 +5,7 @@ import ClassNames from "./Nav"
 
 
 class NavbarPage extends Component {
-  
+
   render() {
     return (
       <div className="Navbar">

@@ -29,7 +29,6 @@ function ClassNames(props) {
           <Typography variant="h6" color="inherit">
             PetSurvival 101
           </Typography>
-          <Button type="submit"> Logout </Button>
         </Toolbar>
       </AppBar>
     </div>
