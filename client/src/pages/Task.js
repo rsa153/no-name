@@ -399,7 +399,7 @@ class Task extends Component {
           {/* <Col size="md-3"> */}
           {/* <Col md={3}> */}
           <Col md={{ span: 2, offset: 1 }}>
-            <div><img width="200px" height="3000px" src={this.state.currentPet} alt="TEST"/></div>
+            <div><img width="200px" height="300px" src={this.state.currentPet} alt="TEST"/></div>
             <br />
           </Col>
 
