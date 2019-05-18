@@ -33,21 +33,24 @@ passport.use(
     { usernameField: "email", passwordField: "password" },
     function (email, password, done) {
     User.findOne({ email: email }, (err, user) => {
-      console.log("----- HAHA --- passport User.find ---- ")
+      console.log("----- HAHA --- passport User.findOne ---- ")
       console.log(err)
       console.log(user)
 
       if (err) { return done(err); }
       if (!user) {
+        console.log("----- ! user ------ ")
         return done(null, false, {
           message: "Incorrect username/password"
         });
       }
       if (!user.checkPassword(password)) {
+        console.log("----- ! checkPassword ------ ")
         return done(null, false, {
           message: "Incorrect username/password"
         });
       }
+
       return done(null, user, {
         message: 'Logged In Successfully'
       });
