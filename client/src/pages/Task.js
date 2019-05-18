@@ -386,13 +386,26 @@ class Task extends Component {
         </Row>
 
         <Row>
-          <Col size="md-10">
+          <Col size="md-3">
             <div><img width="200px" height="270px" src={image} alt="TEST"/></div>
             <br />
+          </Col>
+
+          <Col size="md-5">
+
+            <Calendar
+              onChange={this.onDateChange}
+              value={this.state.date}
+            />
+          </Col>
+
+          <Col size="md-4">
             <div id="main" className="center">
               <TodoForm addItem={this.addItem} inputElement={this.inputElement}
                 currentItem={this.state.currentItem} handleInput={this.handleTodoInputChange}
                 />
+            </div>
+            <div id="main" className="center">
               <FormBtn
                 onClick={this.loadTodosByDate}
               >
@@ -415,13 +428,6 @@ class Task extends Component {
         </Row>
 
         <Row>
-          <Col size="md-3">
-            <Calendar
-              onChange={this.onDateChange}
-              value={this.state.date}
-            />
-          </Col>
-
           <Col size="md-9">
             {this.state.todos.length ? (
               <Row>
