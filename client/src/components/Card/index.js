@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 const styles = {
   card: {
     height: 300,
+    textAlign: "center"
   },
   media: {
     height: 200,

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import API from "../../utils/API";
+import {  withRouter} from 'react-router-dom';
 
-
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -59,6 +59,7 @@ export default class Login extends Component {
           successMsg: "You are successfully logged in!",
           errMsg: ""
         })
+        this.props.history.push("/task")
       } else {
         this.setState({
           loggedIn: false,
@@ -161,3 +162,5 @@ export default class Login extends Component {
     );
   }
 }
+
+export default withRouter(Login)
