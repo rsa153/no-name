@@ -367,7 +367,7 @@ class Task extends Component {
 
 
       <Container fluid>
-      {/* <div><img src={this.state.currentPet} alt="TEST"/></div> */}
+      
 
         <Header
           title={`Create and Complete Your Tasks`}
@@ -387,7 +387,7 @@ class Task extends Component {
 
         <Row>
           <Col size="md-3">
-            <div><img width="200px" height="270px" src={image} alt="TEST"/></div>
+            <div><img width="200px" height="270px" src={this.state.currentPet} alt="TEST"/></div>
             <br />
           </Col>
 
@@ -405,19 +405,26 @@ class Task extends Component {
                 currentItem={this.state.currentItem} handleInput={this.handleTodoInputChange}
                 />
             </div>
+            <br />
+            <br />
             <div id="main" className="center">
               <FormBtn
-                onClick={this.loadTodosByDate}
+              onClick={this.loadTodosByDate}
+              styles ={{
+                margingright: "10px"
+              }}
               >
                 All Todos
               </FormBtn>
-
+              <br />
+              <br />
               <FormBtn
                 onClick={this.loadTodosByDateWeekly}
               >
                 This Week Todos
               </FormBtn>
-
+              <br />
+              <br />
               <FormBtn
                 onClick={this.loadTodosPerDate}
               >
@@ -426,7 +433,7 @@ class Task extends Component {
             </div>
           </Col>
         </Row>
-
+<br />
         <Row>
           <Col size="md-9">
             {this.state.todos.length ? (
