@@ -4,13 +4,20 @@ import Calendar from 'react-calendar';
 import API from "../utils/API";
 import ReactModal from "react-modal";
 // import { setDate, setDateMongo } from "../utils/helpers";
-import { Col, Row, Container } from "../components/Grid";
+// import { Col, Row, Container } from "../components/Grid";
+import { Container } from "../components/Grid";
+
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 import { FormBtn } from "../components/Form";
 import { TodoForm, TodoListCard } from "../components/TodoList";
 import { DailyProgress } from "../components/User";
 import Header from "../components/Header";
 import NavbarPage from "../components/Nav";
-
+import celebration from '../images/celebration.png';
+import image from '../images/Grow/sflower1.jpg';
+import { FormHelperText } from "@material-ui/core";
 const moment = require('moment')
 
 class Task extends Component {
@@ -66,24 +73,26 @@ class Task extends Component {
   }
 
   handleCloseTasksCompletionModal () {
-    var petURL = "";
-    
+    var src = "";
+
     if(this.state.currentPet == "stage1.jpg")
     {
-      petURL = "stage2.jpg";
+      src = "stage2.jpg";
     }
     else if(this.state.currentPet == "stage2.jpg")
     {
-      petURL = "stage3.jpg";
+      src = "stage3.jpg";
     }
     else if(this.state.currentPet == "stage3.jpg")
     {
-      petURL = "stage4.jpg";
+      src = "stage4.jpg";
     }
     else
     {
-      petURL = "sflower3.jpg";
+      src = "sflower3.jpg";
     }
+
+    var petURL = require('../images/Grow/' + src);
 
     this.setState({ showTasksCompletionModal: false, currentPet: petURL });
   }
@@ -149,12 +158,22 @@ class Task extends Component {
   loadTodosPerDate(date) {
     // load todos for selected date in calendar
     console.log("------- loadTodosPerDate -------")
-    const query = {
+    let query = {
       dateDue: {
         "$gte": moment(date).startOf('day').toDate(),
         "$lte": moment(date).endOf('day').toDate()
       },
     };
+
+    if (!date) {
+      query = {
+        dateDue: {
+          "$gte": moment(this.state.date).startOf('day').toDate(),
+          "$lte": moment(this.state.date).endOf('day').toDate()
+        },
+      };
+    }
+
     API.getTasksByDate(query)
       .then((res) => {
         const todoItems = res.data;
@@ -353,14 +372,21 @@ class Task extends Component {
 
 
       <Container fluid>
-      <div><img src={this.state.currentPet} alt="TEST"/></div>
+
+
         <Header
-          title={`Create ToDos`}
-          subtitle={`Create ToDos subtitle`}
+          title={`Create and Complete Your Tasks`}
         />
+        <Col md={{ span: 10, offset: 1 }}>
+
+        <h5 className="mt-0">To Add a Task, click on the date in your calendar,
+          type in your task and click Add Task.
+          To complete your task, click on the checkmark next to it.</h5>
+        <br />
+        </Col>
 
         <Row>
-          <Col size="md-10">
+          <Col md={{ span: 8, offset: 1 }}>
             <div id="main" className="center mb-3">
               <DailyProgress today={this.state.today}
                 color={this.state.progressColor} percent={this.state.dailyPercentComplete}/>
@@ -369,36 +395,67 @@ class Task extends Component {
         </Row>
 
         <Row>
-          <Col size="md-10">
+
+          {/* <Col size="md-3"> */}
+          {/* <Col md={3}> */}
+          <Col md={{ span: 2, offset: 1 }}>
+            <div><img width="200px" height="270px" src={image} alt="TEST"/></div>
+            <br />
+          </Col>
+
+
+          {/* <Col size="md-5"> */}
+          {/* <Col md={4}> */}
+          <Col md={{ span: 4, offset: 1 }}>
+
+            <Calendar
+              onChange={this.onDateChange}
+              value={this.state.date}
+            />
+          </Col>
+
+          {/* <Col size="md-4"> */}
+          <Col md={3}>
             <div id="main" className="center">
               <TodoForm addItem={this.addItem} inputElement={this.inputElement}
                 currentItem={this.state.currentItem} handleInput={this.handleTodoInputChange}
                 />
-              <FormBtn
-                onClick={this.loadTodosByDate}
-              >
-                All Todos
-              </FormBtn>
+            </div>
 
+            <div id="main" className="center">
+              <br />
+              <br />
               <FormBtn
                 onClick={this.loadTodosByDateWeekly}
               >
                 This Week Todos
               </FormBtn>
+              <br />
+              <br />
+              <FormBtn
+                onClick={this.loadTodosPerDate}
+              >
+                Today's Todos
+              </FormBtn>
+              <br />
+              <br />
+              <FormBtn
+              onClick={this.loadTodosByDate}
+              styles ={{
+                margingright: "10px"
+              }}
+              >
+                All Todos
+              </FormBtn>
             </div>
           </Col>
         </Row>
-
+<br />
         <Row>
-          <Col size="md-3">
-            <Calendar
-              onChange={this.onDateChange}
-              value={this.state.date}
-            />
+          {/* <Col size="md-9"> */}
+          {/* <Col md={9}> */}
+          <Col md={{ span: 9, offset: 1 }}>
 
-          </Col>
-
-          <Col size="md-9">
             {this.state.todos.length ? (
               <Row>
               {this.state.todos.map((items, idx) => (
@@ -415,7 +472,8 @@ class Task extends Component {
               </Row>
             ) : (
               <Row>
-              <Col size="md-4">
+              {/* <Col size="md-4"> */}
+              <Col md={4}>
                 <TodoListCard
                   todoDate={this.state.date}
                   items={this.state.todos}
@@ -434,14 +492,25 @@ class Task extends Component {
             isOpen={this.state.showTasksCompletionModal}
             contentLabel="Congrats! You finished your daily tasks!"
           >
-            <p>Congrats! You finished your tasks for the day!</p>
-            <button onClick={this.handleCloseTasksCompletionModal}
+             <button onClick={this.handleCloseTasksCompletionModal}
             style = {{
               color: "#0B92C8",
               fontWeight: "bolder"
             }}>
               X</button>
+              <h1 className="text-center" style={{ color: "#0B92C8" }}>
+              Congrats! You finished your tasks for the day!</h1>
 
+              <img src={celebration} alt="celebration" style={{
+              width:"400px", /* This value will depend on what size you want for your loading image, let's say it's 50px */
+              height: "400px",
+              position: "absolute",
+              left: "35%",
+              top: "35%"
+              }}/>
+              <br />
+              <h3 className="text-center" style={{ color: "#0B92C8" }}>
+              Please press the X button in the upper left corner to get back to writing and completing more tasks</h3>
         </ReactModal>
       </div>
     );

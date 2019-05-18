@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ProgressBar from 'react-bootstrap/ProgressBar';
+// import ProgressBar from 'react-bootstrap/ProgressBar';
 
 import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
@@ -41,9 +41,9 @@ class DailyProgress extends Component {
     return (
       <div>
 
-        <h5> Daily Percent Complete of {setTime(this.props.today)}</h5>
+        <h5> Daily Percent Complete of {setDateMongo(this.props.today)}</h5>
 
-        <ProgressBar now={this.props.percent} label={`${this.props.percent}%`} />
+        {/* <ProgressBar now={this.props.percent} label={`${this.props.percent}%`} /> */}
 
         <Progress
           percent={this.props.percent}
@@ -67,7 +67,7 @@ class DailyProgress extends Component {
             },
             success: {
               symbol: this.props.percent + '%',
-              trailColor: 'lime',
+              trailColor: 'green',
               color: 'green'
             }
           }}
