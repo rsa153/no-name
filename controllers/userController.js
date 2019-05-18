@@ -50,11 +50,20 @@ module.exports = {
       console.log(userMatch)
       if (err) {
         console.log("User signUp error: ", err)
-        res.redirect("/signup")
+        // res.redirect("/signup")
+        return res.status(401).json({
+          message: "Signup Error"
+        })
+      }
 
-      } else if (userMatch) {
+      if (userMatch) {
         console.log(" --- uh oh --- existing user Match ----- ")
-        res.redirect("/signup")
+        // res.redirect("/signup")
+
+        return res.status(401).json({
+          message: "User with that email already exist. Please login or use another email."
+        })
+
 
         // return res.json({
         //   error: `Sorry, already a user with the email: ${email}`

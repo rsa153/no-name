@@ -4,7 +4,6 @@ const User = require("../../models/user")
 const userController = require("../../controllers/userController");
 const passport = require('../../server/passport')
 
-
 // Matches with "/api/user"
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -39,41 +38,45 @@ router.get('/currentuser', (req, res, next) => {
 
 // router.route("/login")
 //   .post(userController.logIn);
+//   .get(userController.getLogin);
 
 
-router.post('/login', function (req, res, next) {
-  console.log("----- route api/user/login -------")
-  console.log(req.body)
-  console.log('================')
-  next()
-  },
-  passport.authenticate('local'), (req, res) => {
-    console.log("------ passport authenticate ------ ")
-    console.log('POST to /login')
-    console.log('--- req.user -----')
-    console.log(req.user)
+router.get('/login', function (req, res) {
+  console.log("------- router user get.login ------- ")
+  // console.log(req.flash('error'));
+  // console.log(req.flash())
+  // console.log(res)
+  res.send();
+});
 
-    const user = JSON.parse(JSON.stringify(req.user))
-    const cleanUser = Object.assign({}, user)
 
-    if (cleanUser.local) {
-      console.log(`Deleting ${cleanUser.password}`)
-      delete cleanUser.password
-    }
 
-    res.json({ user: cleanUser })
-    console.log('--- cleanUser -----')
-    console.log(cleanUser)
+router.post('/login', function(req, res, next ){
+    passport.authenticate('local', function(err, user, info) {
+      console.log("---- routes user --- post login -----")
+      console.log(err)
+      console.log(user)
+      console.log(info)
 
-    // haha
-    // if (req.user) {
-    //   res.redirect('/task');
-    // } else {
-    //   res.redirect('/login');
-    // }
+      if (err) { return next(err) }
+      if (!user) {
+        console.log("---- ! user -----")
+        return res.status(401).json({ message: "Invalid username/password" })
+        }
+      console.log("------ router user post login ------- no req.login")
 
-  }
-)
+      // Using custom callback nedds to manually
+      // establish session with req.login
+
+      req.logIn(user, function (err) {
+        if (err) { return next(err); }
+        // return res.redirect('/users/' + user.username);
+        // return res.json(user);
+        return res.json({ user: user });
+      });
+    })(req, res, next);
+});
+
 
 
 // Matches with "/api/user/signup"
