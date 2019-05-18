@@ -377,10 +377,13 @@ class Task extends Component {
         <Header
           title={`Create and Complete Your Tasks`}
         />
+        <Col md={{ span: 10, offset: 1 }}>
+
         <h5 className="mt-0">To Add a Task, click on the date in your calendar,
           type in your task and click Add Task.
           To complete your task, click on the checkmark next to it.</h5>
         <br />
+        </Col>
 
         <Row>
           <Col md={{ span: 8, offset: 1 }}>
