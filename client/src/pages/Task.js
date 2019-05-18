@@ -371,10 +371,10 @@ class Task extends Component {
 
         <Header
           title={`Create and Complete Your Tasks`}
-          styles= {{
-          }}
         />
-        <h3 className>To Add a Task, click on the date in your calendar, type in your task and click Add Task. To complete your task, click on the checkmark next to it.</h3>
+        <h5 className="mt-0">To Add a Task, click on the date in your calendar,
+          type in your task and click Add Task.
+          To complete your task, click on the checkmark next to it.</h5>
         <br />
         <Row>
           <Col size="md-11">
