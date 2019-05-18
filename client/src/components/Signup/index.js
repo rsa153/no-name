@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import { Redirect } from 'react-router-dom'
 import API from "../../utils/API";
-
-export default class Signup extends Component {
+import {  withRouter} from 'react-router-dom';
+ class Signup extends Component {
   constructor(props) {
     super(props);
 
@@ -23,7 +23,7 @@ export default class Signup extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdateProps(nextProps) {
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
@@ -61,12 +61,14 @@ export default class Signup extends Component {
         console.log("------ HandleSubmit Sign Up ------")
         console.log(res)
         if (!res.data.error) {
+          // return <Redirect to='/pet' />;
           console.log('youre good');
           this.setState({
-            redirectTo: '/user',
+            redirectTo: '/pet',
             successMsg: "You are sucessfully signed up!",
             errMsg: ""
           })
+          this.props.history.push("/pet")
         } else {
           console.log('duplicate')
         }
@@ -180,3 +182,4 @@ export default class Signup extends Component {
     );
   }
 }
+export default withRouter(Signup)
