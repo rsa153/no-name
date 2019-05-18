@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Calendar from 'react-calendar';
 // import Card from 'react-bootstrap/Card';
 import API from "../utils/API";
+import ReactModal from "react-modal";
 // import { setDate, setDateMongo } from "../utils/helpers";
 import { Col, Row, Container } from "../components/Grid";
 import { FormBtn } from "../components/Form";
@@ -35,6 +36,9 @@ class Task extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onDateChange = this.onDateChange.bind(this);
 
+    this.handleOpenTasksCompletionModal = this.handleOpenTasksCompletionModal.bind(this);
+    this.handleCloseTasksCompletionModal = this.handleCloseTasksCompletionModal.bind(this);
+
     this.state = {
       userName: "",
       userID: "",
@@ -45,7 +49,8 @@ class Task extends Component {
       currentPet: "",
       dailyPercentComplete: 0,
       progressColor: "default",
-      view: "week"
+      view: "week",
+      showTasksCompletionModal: false
     };
   }
 
@@ -54,6 +59,14 @@ class Task extends Component {
     this.loadTodosByDateWeekly(this.state.today);
     // this.loadCurrentUser();
     this.loadCurrentPet();
+  }
+
+  handleOpenTasksCompletionModal () {
+    this.setState({ showTasksCompletionModal: true });
+  }
+
+  handleCloseTasksCompletionModal () {
+    this.setState({ showTasksCompletionModal: false });
   }
 
   loadCurrentUser() {
@@ -205,6 +218,10 @@ class Task extends Component {
           color = "active";
         } else if (percentComplete > 55 && percentComplete < 90) {
           color = "default";
+        }
+        else if(percentComplete == 100)
+        {
+          this.handleOpenTasksCompletionModal();
         }
         console.log(color)
 
@@ -393,6 +410,20 @@ class Task extends Component {
           </Col>
         </Row>
       </Container>
+
+        <ReactModal
+            isOpen={this.state.showTasksCompletionModal}
+            contentLabel="Congrats! You finished your daily tasks!"
+          >
+            <p>Congrats! You finished your tasks for the day!</p>
+            <button onClick={this.handleCloseTasksCompletionModal}
+            style = {{
+              color: "#0B92C8",
+              fontWeight: "bolder"
+            }}>
+              X</button>
+
+        </ReactModal>
       </div>
     );
   }
