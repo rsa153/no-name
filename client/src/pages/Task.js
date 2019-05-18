@@ -85,7 +85,7 @@ class Task extends Component {
       src = "sflower3.jpg";
     }
 
-    petURL = require('../images/Grow/' + src);
+    var petURL = require('../images/Grow/' + src);
 
     this.setState({ showTasksCompletionModal: false, currentPet: petURL });
   }
