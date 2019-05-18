@@ -66,7 +66,26 @@ class Task extends Component {
   }
 
   handleCloseTasksCompletionModal () {
-    this.setState({ showTasksCompletionModal: false });
+    var petURL = "";
+    
+    if(this.state.currentPet == "stage1.jpg")
+    {
+      petURL = "stage2.jpg";
+    }
+    else if(this.state.currentPet == "stage2.jpg")
+    {
+      petURL = "stage3.jpg";
+    }
+    else if(this.state.currentPet == "stage3.jpg")
+    {
+      petURL = "stage4.jpg";
+    }
+    else
+    {
+      petURL = "sflower3.jpg";
+    }
+
+    this.setState({ showTasksCompletionModal: false, currentPet: petURL });
   }
 
   loadCurrentUser() {
