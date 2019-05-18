@@ -11,7 +11,7 @@ import { DailyProgress } from "../components/User";
 import Header from "../components/Header";
 import NavbarPage from "../components/Nav";
 import celebration from '../images/celebration.png';
-import image from '../images/Grow/sflower1.jpg'; 
+import image from '../images/Grow/sflower1.jpg';
 import { FormHelperText } from "@material-ui/core";
 const moment = require('moment')
 
@@ -69,7 +69,7 @@ class Task extends Component {
 
   handleCloseTasksCompletionModal () {
     var src = "";
-    
+
     if(this.state.currentPet == "stage1.jpg")
     {
       src = "stage2.jpg";
@@ -153,12 +153,22 @@ class Task extends Component {
   loadTodosPerDate(date) {
     // load todos for selected date in calendar
     console.log("------- loadTodosPerDate -------")
-    const query = {
+    let query = {
       dateDue: {
         "$gte": moment(date).startOf('day').toDate(),
         "$lte": moment(date).endOf('day').toDate()
       },
     };
+
+    if (!date) {
+      query = {
+        dateDue: {
+          "$gte": moment(this.state.date).startOf('day').toDate(),
+          "$lte": moment(this.state.date).endOf('day').toDate()
+        },
+      };
+    }
+
     API.getTasksByDate(query)
       .then((res) => {
         const todoItems = res.data;
@@ -358,7 +368,7 @@ class Task extends Component {
 
       <Container fluid>
       {/* <div><img src={this.state.currentPet} alt="TEST"/></div> */}
-      
+
         <Header
           title={`Create and Complete Your Tasks`}
           styles= {{
@@ -394,6 +404,12 @@ class Task extends Component {
               >
                 This Week Todos
               </FormBtn>
+
+              <FormBtn
+                onClick={this.loadTodosPerDate}
+              >
+                Today's Todos
+              </FormBtn>
             </div>
           </Col>
         </Row>
@@ -404,7 +420,6 @@ class Task extends Component {
               onChange={this.onDateChange}
               value={this.state.date}
             />
-
           </Col>
 
           <Col size="md-9">
@@ -451,7 +466,7 @@ class Task extends Component {
               X</button>
               <h1 className="text-center" style={{ color: "#0B92C8" }}>
               Congrats! You finished your tasks for the day!</h1>
-              
+
               <img src={celebration} alt="celebration" style={{
               width:"400px", /* This value will depend on what size you want for your loading image, let's say it's 50px */
               height: "400px",
