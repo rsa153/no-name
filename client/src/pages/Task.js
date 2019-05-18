@@ -4,7 +4,12 @@ import Calendar from 'react-calendar';
 import API from "../utils/API";
 import ReactModal from "react-modal";
 // import { setDate, setDateMongo } from "../utils/helpers";
-import { Col, Row, Container } from "../components/Grid";
+// import { Col, Row, Container } from "../components/Grid";
+import { Container } from "../components/Grid";
+
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 import { FormBtn } from "../components/Form";
 import { TodoForm, TodoListCard } from "../components/TodoList";
 import { DailyProgress } from "../components/User";
@@ -367,7 +372,7 @@ class Task extends Component {
 
 
       <Container fluid>
-      
+
 
         <Header
           title={`Create and Complete Your Tasks`}
@@ -376,8 +381,9 @@ class Task extends Component {
           type in your task and click Add Task.
           To complete your task, click on the checkmark next to it.</h5>
         <br />
+
         <Row>
-          <Col size="md-11">
+          <Col md={{ span: 8, offset: 1 }}>
             <div id="main" className="center mb-3">
               <DailyProgress today={this.state.today}
                 color={this.state.progressColor} percent={this.state.dailyPercentComplete}/>
@@ -386,12 +392,18 @@ class Task extends Component {
         </Row>
 
         <Row>
-          <Col size="md-3">
-            <div><img width="200px" height="270px" src={this.state.currentPet} alt="TEST"/></div>
+
+          {/* <Col size="md-3"> */}
+          {/* <Col md={3}> */}
+          <Col md={{ span: 2, offset: 1 }}>
+            <div><img width="200px" height="270px" src={image} alt="TEST"/></div>
             <br />
           </Col>
 
-          <Col size="md-5">
+
+          {/* <Col size="md-5"> */}
+          {/* <Col md={4}> */}
+          <Col md={{ span: 4, offset: 1 }}>
 
             <Calendar
               onChange={this.onDateChange}
@@ -399,23 +411,15 @@ class Task extends Component {
             />
           </Col>
 
-          <Col size="md-4">
+          {/* <Col size="md-4"> */}
+          <Col md={3}>
             <div id="main" className="center">
               <TodoForm addItem={this.addItem} inputElement={this.inputElement}
                 currentItem={this.state.currentItem} handleInput={this.handleTodoInputChange}
                 />
             </div>
-            <br />
-            <br />
+
             <div id="main" className="center">
-              <FormBtn
-              onClick={this.loadTodosByDate}
-              styles ={{
-                margingright: "10px"
-              }}
-              >
-                All Todos
-              </FormBtn>
               <br />
               <br />
               <FormBtn
@@ -430,12 +434,25 @@ class Task extends Component {
               >
                 Today's Todos
               </FormBtn>
+              <br />
+              <br />
+              <FormBtn
+              onClick={this.loadTodosByDate}
+              styles ={{
+                margingright: "10px"
+              }}
+              >
+                All Todos
+              </FormBtn>
             </div>
           </Col>
         </Row>
 <br />
         <Row>
-          <Col size="md-9">
+          {/* <Col size="md-9"> */}
+          {/* <Col md={9}> */}
+          <Col md={{ span: 9, offset: 1 }}>
+
             {this.state.todos.length ? (
               <Row>
               {this.state.todos.map((items, idx) => (
@@ -452,7 +469,8 @@ class Task extends Component {
               </Row>
             ) : (
               <Row>
-              <Col size="md-4">
+              {/* <Col size="md-4"> */}
+              <Col md={4}>
                 <TodoListCard
                   todoDate={this.state.date}
                   items={this.state.todos}
