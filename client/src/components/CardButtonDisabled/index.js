@@ -11,32 +11,34 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = {
   card: {
-    maxWidth: "10em",
-    // margin: "10px"
+    maxWidth: "20em",
   },
   media: {
-    height: "10em",
+    height: "10em",  
+    
   },
-  
+  root: {
+    margin: "2em"  
+  }
+
 };
 
-function CardButton(props) {
+function CardButtonDisabled(props) {
   const { classes } = props;
   return (
     <Card className={classes.card}>
-      <CardActionArea>
         <CardMedia
           className={classes.media}
           image={props.image}
           title={props.title}
         />
-      </CardActionArea>
+
     </Card>
   );
 }
 
-CardButton.propTypes = {
+CardButtonDisabled.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CardButton);
+export default withStyles(styles)(CardButtonDisabled);
