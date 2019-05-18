@@ -1,9 +1,9 @@
 import React from "react";
 // import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import ReactModal from "react-modal"
-import Signup from "../Signup"
-import Login from "../Login"
+import ReactModal from "react-modal";
+import Signup from "../Signup";
+import Login from "../Login";
 
 class Jumbotron extends React.Component {
   constructor () {

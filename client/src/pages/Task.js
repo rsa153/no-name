@@ -21,6 +21,7 @@ class Task extends Component {
     this.loadTodosPerDate = this.loadTodosPerDate.bind(this);
     this.loadTodosByDate = this.loadTodosByDate.bind(this);
     this.loadTodosByDateWeekly = this.loadTodosByDateWeekly.bind(this);
+    this.loadCurrentPet = this.loadCurrentPet.bind(this);
 
     this.getDailyPercentComplete = this.getDailyPercentComplete.bind(this);
     this.updateTodos = this.updateTodos.bind(this);
@@ -39,6 +40,7 @@ class Task extends Component {
       currentItem: { text: "", date: "" },
       today: new Date(),
       date: new Date(),
+      currentPet: "",
       dailyPercentComplete: 0,
       progressColor: "default",
       view: "week"
@@ -46,8 +48,23 @@ class Task extends Component {
   }
 
   componentDidMount() {
-    this.getDailyPercentComplete(this.state.today)
+    this.getDailyPercentComplete(this.state.today);
     this.loadTodosByDateWeekly(this.state.today);
+    this.loadCurrentPet();
+  }
+
+  loadCurrentPet() {
+    API.getPet()
+      .then((res) => {
+        console.log(res.data);
+
+        const petURL = require('../images/Grow/' + res.data.url);
+
+        this.setState({
+          currentPet: petURL
+        });
+      })
+      .catch((err) => console.log(err));
   }
 
   loadTodosPerDate(date) {
@@ -250,7 +267,7 @@ class Task extends Component {
         
       
       <Container fluid>
-        
+      <div><img src={this.state.currentPet} alt="TEST"/></div>
         <Header
           title={`Create ToDos`}
           subtitle={`Create ToDos subtitle`}

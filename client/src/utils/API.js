@@ -68,6 +68,8 @@ export default {
   // Log out user
   logOutUser: function(userData) {
     return axios.post("/api/user/logout", userData);
+  },
+  getPet: function() {
+    return axios.get("/api/pets");
   }
-
 };
