@@ -66,7 +66,8 @@ class Home extends Component {
             clear: "both",
             marginTop:"10px",
             position: "absolute",
-            width: "100%"
+            width: "100%",
+            bottom: "0"
           }}
         >
 
