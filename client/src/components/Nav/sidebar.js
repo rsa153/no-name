@@ -1,7 +1,7 @@
 import React from "react";
 import { slide as Menu } from "react-burger-menu";
 import API from "../../utils/API";
-
+import {  withRouter} from 'react-router-dom';
 
 class Sidebar extends React.Component {
 
@@ -15,6 +15,7 @@ class Sidebar extends React.Component {
     console.log("------- HAHA ----- handleClik Logout up top ------")
     API.logOutUser()
       .then(res => {
+        this.props.history.push("/logout")
         console.log("------- HAHA ----- API.logoutUser ------")
         console.log(res.data)
       })
@@ -38,4 +39,4 @@ class Sidebar extends React.Component {
   }
 }
 
-export default Sidebar;
+export default withRouter(Sidebar);
