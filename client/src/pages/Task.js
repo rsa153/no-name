@@ -52,7 +52,7 @@ class Task extends Component {
   componentDidMount() {
     this.getDailyPercentComplete(this.state.today);
     this.loadTodosByDateWeekly(this.state.today);
-    this.loadCurrentUser();
+    // this.loadCurrentUser();
     this.loadCurrentPet();
   }
 
@@ -102,6 +102,8 @@ class Task extends Component {
     console.log(this.state);
     API.getPet()
       .then((res) => {
+        console.log(" ---- loadCurrentPet---")
+        console.log(res.data)
 
         const petURL = require('../images/Grow/' + res.data.url);
 
@@ -117,7 +119,6 @@ class Task extends Component {
     console.log("------- loadTodosPerDate -------")
     const query = {
       dateDue: {
-
         "$gte": moment(date).startOf('day').toDate(),
         "$lte": moment(date).endOf('day').toDate()
       },
@@ -288,12 +289,16 @@ class Task extends Component {
   };
 
   handleTodoInputChange = event => {
+
+    // Future development: customize timezone
+    // Assume Chicago area for now
+    // Mongodb stores in utc by default, adjust utcOffset
+    const dateDueUtcOffset = moment(this.state.date).endOf('day').subtract(5, 'hours').format()
     const itemText = event.target.value
     const currentItem = {
       user: this.state.user,
       text: itemText,
-      dateDue: moment(this.state.date).endOf('day').toDate(),
-
+      dateDue: dateDueUtcOffset,
       dateCreated: this.state.today
     }
     this.setState({
@@ -309,15 +314,15 @@ class Task extends Component {
         resizeMode: 'cover',
       }}>
           <NavbarPage />
-        
-      
+
+
       <Container fluid>
       <div><img src={this.state.currentPet} alt="TEST"/></div>
         <Header
           title={`Create ToDos`}
           subtitle={`Create ToDos subtitle`}
         />
-        
+
         <Row>
           <Col size="md-10">
             <div id="main" className="center mb-3">
