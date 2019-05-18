@@ -61,7 +61,7 @@ module.exports = {
         // res.redirect("/signup")
 
         return res.status(401).json({
-          message: "User with that email already exist. Please login or use another email."
+          message: "User with that email already exist. Please login or use another email to sign up."
         })
 
 
