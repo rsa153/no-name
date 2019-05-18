@@ -1,5 +1,6 @@
 module.exports = {
   User: require("./user"),
   Task: require("./task"),
-  Pet: require("./pet")
+  Pet: require("./pet"),
+  Session: require("./session")
 };

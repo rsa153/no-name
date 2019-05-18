@@ -4,6 +4,10 @@ const User = require("../../models/user")
 const userController = require("../../controllers/userController");
 const passport = require('../../server/passport')
 
+// Matches with "/api/user/getUserInfo"
+router.route("/getUserInfo/:id")
+  .post(userController.findById);
+
 // Matches with "/api/user"
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -76,8 +80,6 @@ router.post('/login', function(req, res, next ){
       });
     })(req, res, next);
 });
-
-
 
 // Matches with "/api/user/signup"
 router.route("/signup")
