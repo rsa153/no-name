@@ -13,7 +13,7 @@ function loggedIn(req, res, next) {
   if (req.user) {
     next();
   } else {
-    res.redirect('/login');
+    res.redirect('/pet');
   }
 }
 
@@ -29,7 +29,6 @@ function App() {
   return (
     <Router>
       <div>
-
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/pet" component={Pet} />
