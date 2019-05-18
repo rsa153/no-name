@@ -5,7 +5,7 @@ const petSchema = new Schema({
     name: { type: String, required: true },
     url: {type: String},
     userEmail: {type: String},
-    userID: {type: String}
+    userID: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true}
 });
 
 const Pet = mongoose.model("Pet", petSchema);

@@ -64,15 +64,15 @@ class Task extends Component {
         this.setState({
           userID: splitSessionData[19]
         });
+        console.log(splitSessionData[19]);
 
         API.getUserInfo(splitSessionData[19])
           .then((res) => {
-            console.log(res.data);
-            // var splitSessionData = res.data.session.split('"');
+            var splitSessionData = res.data.session.split('"');
 
-            // this.setState({
-            //   userID: splitSessionData[19]
-            // });
+            this.setState({
+              userID: splitSessionData[19]
+            });
           })
           .catch((err) => console.log(err));
 
