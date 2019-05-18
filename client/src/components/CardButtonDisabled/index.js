@@ -8,40 +8,37 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-// import "./index.css";
 
 const styles = {
   card: {
-    height: 300,
+    maxWidth: "20em",
   },
   media: {
-    height: 200,
+    height: "10em",  
+    
   },
+  root: {
+    margin: "2em"  
+  }
+
 };
 
-function MediaCard(props) {
+function CardButtonDisabled(props) {
   const { classes } = props;
   return (
     <Card className={classes.card}>
         <CardMedia
           className={classes.media}
           image={props.image}
-          title="Flower"
+          title={props.title}
         />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2" style={{textAlign:"text-center"}}>
-          {props.name}
-          </Typography>
-          <Typography component="p">
-          {props.description}
-          </Typography>
-        </CardContent>
+
     </Card>
   );
 }
 
-MediaCard.propTypes = {
+CardButtonDisabled.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MediaCard);
+export default withStyles(styles)(CardButtonDisabled);

@@ -8,9 +8,9 @@ import { FormBtn } from "../components/Form";
 import { TodoForm, TodoListCard } from "../components/TodoList";
 import { DailyProgress } from "../components/User";
 import Header from "../components/Header";
+import NavbarPage from "../components/Nav";
 
 const moment = require('moment')
-
 
 class Task extends Component {
 
@@ -241,12 +241,21 @@ class Task extends Component {
 
   render() {
     return (
+        <div className="Pet" style={{
+        background: "#FAF0BA",
+        minHeight: "100vh",
+        resizeMode: 'cover',
+      }}>
+          <NavbarPage />
+        
+      
       <Container fluid>
+        
         <Header
           title={`Create ToDos`}
           subtitle={`Create ToDos subtitle`}
         />
-
+        
         <Row>
           <Col size="md-10">
             <div id="main" className="center mb-3">
@@ -317,6 +326,7 @@ class Task extends Component {
           </Col>
         </Row>
       </Container>
+      </div>
     );
   }
 }

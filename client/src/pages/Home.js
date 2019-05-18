@@ -2,25 +2,20 @@ import React, { Component } from "react";
 import { Col, Row, Container } from "../components/Grid";
 import Jumbotron from "../components/Jumbotron";
 import MediaCard from "../components/Card";
-import image from "../images/homeflower.jpg";
-import checklist from "../images/checklist.png";
-import animals from "../images/Animals.jpg";
-import grow from "../images/grow.jpg";
+import image from "../images/Home/homeflower.jpg";
+import checklist from "../images/Home/checklist.png";
+import animals from "../images/Home/Animals.jpg";
+import grow from "../images/Home/grow.jpg";
 import { MDBFooter } from "mdbreact";
-// import ExampleApp from "../components/LoginModal";
 
 class Home extends Component {
-  state = {
-    group: {},
-    members: []
-  };
 
   render() {
     return (
       <div
         style={{
           background: "#FAF0BA",
-          minHeight: "100%",
+          minHeight: "100vh",
           resizeMode: 'cover',
         }}
       >
@@ -71,7 +66,6 @@ class Home extends Component {
             clear: "both",
             marginTop:"10px",
             position: "absolute",
-            // bottom: "0",
             width: "100%"
           }}
         >
