@@ -127,7 +127,7 @@ function BottomAppBar(props) {
           <IconButton color="inherit" aria-label="Open drawer">
             <MenuIcon />
           </IconButton>
-          <Fab color="secondary" aria-label="Add" className={classes.fabButton}>
+          <Fab color="secondary" aria-laybel="Add" className={classes.fabButton}>
             <AddIcon />
           </Fab>
           <div>

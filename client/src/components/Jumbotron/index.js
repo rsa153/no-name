@@ -1,9 +1,9 @@
 import React from "react";
 // import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import ReactModal from "react-modal"
-import Signup from "../Signup"
-import Login from "../Login"
+import ReactModal from "react-modal";
+import Signup from "../Signup";
+import Login from "../Login";
 
 class Jumbotron extends React.Component {
   constructor () {
@@ -50,18 +50,28 @@ class Jumbotron extends React.Component {
       }}
       className="jumbotron"
     >
-      <div
+      <h1
         className="text-center"
         style={{
-          fontSize: "50px",
           margin: "0px",
           paddingTop: "20px",
           color: "#ffffff"
         }}
       >
-        Lacking Motivation? Love Virtual Pets?
-        <h4>Register for the app that gives you both: PetMotivation for Task Management</h4>
-      </div>
+        PetSurvival 101: A Motivational Task Management Tool for Adolescents</h1>
+        <h3  style={{
+          margin: "0px",
+          paddingTop: "20px",
+          color: "#ffffff"
+        }}
+        >To get started, please sign up or sign in to our App below</h3>
+        <p
+        style={{
+          margin: "0px",
+          paddingTop: "10px",
+          color: "#ffffff"
+        }}>__________________________________________________________________________________________</p>
+      
 
       <div className = "pt-3">
       <Button

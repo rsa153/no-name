@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import API from "../../utils/API";
+import {  withRouter} from 'react-router-dom';
 
-
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -13,7 +13,9 @@ export default class Login extends Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      errMsg: "",
+      successMsg: ""
     };
   }
 
@@ -37,22 +39,56 @@ export default class Login extends Component {
     })
     .then(res => {
       console.log("------- HAHA ----- API.loginUser ------")
+
+      console.log(res.data)
+
+      // get res from route api/user
+      // this is with hack res.json({ user: user }) thing
+      console.log(res.data.user)
+
       console.log(res.data.user.email)
-      if (res.data.user.email) {
+
+      const currentUser = res.data.user;
+
+      if (currentUser.email) {
         console.log('THERE IS A USER')
         this.setState({
           loggedIn: true,
-          email: res.data.user.email,
-          redirectTo:"/task"
+          email: currentUser.email,
+          redirectTo:"/task",
+          successMsg: "You are successfully logged in!",
+          errMsg: ""
         })
-
+        this.props.history.push("/task")
       } else {
         this.setState({
           loggedIn: false,
-          email: null
+          email: ""
         })
       }
+
     })
+    .catch(err => {
+      // res.status(422).json(err)
+      console.log("------ Catch Error Login------")
+      console.log(err)
+      console.log(err.statusMessage)
+      console.log("---- err.response ---- wohoo ")
+      console.log(err.response)
+
+      const errlogin = err.response.data.message;
+
+      if (errlogin) {
+        console.log("---- errlogin ----")
+        console.log(errlogin)
+
+        this.setState({
+          errMsg: errlogin,
+          successMsg: ""
+        })
+      }
+
+    });
   };
 
   render() {
@@ -60,7 +96,7 @@ export default class Login extends Component {
       <div className="Login">
         <h3 className="text-center" style={{ color: "#0B92C8" }}>
           Welcome back! If you already have an account, please use your email
-          and password to sign in
+          and password to log in
         </h3>
         <br />
         <form onSubmit={this.handleSubmit}>
@@ -101,17 +137,30 @@ export default class Login extends Component {
               marginTop: "40px"
             }}
           >
-            Sign In
+            Log In
           </Button>
           <br />
-          <h5 className="text-center" style={{ color: "#0B92C8",
-        fontStyle: "italic" }}>
+          <h5 className="text-center" style={{ color: "#0B92C8", fontStyle: "italic" }}>
             If you don't already have an account and would like to create one, please press "X" in the upper left corner to close this screen and click the "Sign up"
             button
           </h5>
+
+          {this.state.successMsg.length ? (
+            <h5 className="text-center" style={{ color: "green", fontStyle: "italic" }}>
+              <br />
+              {this.state.successMsg}
+            </h5>
+          ) : (
+            <h5 className="text-center" style={{ color: "red", fontStyle: "italic" }}>
+              <br />
+              {this.state.errMsg}
+            </h5>
+          )}
 
         </form>
       </div>
     );
   }
 }
+
+export default withRouter(Login)

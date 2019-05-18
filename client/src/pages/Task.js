@@ -8,9 +8,9 @@ import { FormBtn } from "../components/Form";
 import { TodoForm, TodoListCard } from "../components/TodoList";
 import { DailyProgress } from "../components/User";
 import Header from "../components/Header";
+import NavbarPage from "../components/Nav";
 
 const moment = require('moment')
-
 
 class Task extends Component {
 
@@ -21,6 +21,8 @@ class Task extends Component {
     this.loadTodosPerDate = this.loadTodosPerDate.bind(this);
     this.loadTodosByDate = this.loadTodosByDate.bind(this);
     this.loadTodosByDateWeekly = this.loadTodosByDateWeekly.bind(this);
+    this.loadCurrentUser = this.loadCurrentUser.bind(this);
+    this.loadCurrentPet = this.loadCurrentPet.bind(this);
 
     this.getDailyPercentComplete = this.getDailyPercentComplete.bind(this);
     this.updateTodos = this.updateTodos.bind(this);
@@ -34,11 +36,13 @@ class Task extends Component {
     this.onDateChange = this.onDateChange.bind(this);
 
     this.state = {
-      user: "",
+      userName: "",
+      userID: "",
       todos: [],
       currentItem: { text: "", date: "" },
       today: new Date(),
       date: new Date(),
+      currentPet: "",
       dailyPercentComplete: 0,
       progressColor: "default",
       view: "week"
@@ -46,8 +50,66 @@ class Task extends Component {
   }
 
   componentDidMount() {
-    this.getDailyPercentComplete(this.state.today)
+    this.getDailyPercentComplete(this.state.today);
     this.loadTodosByDateWeekly(this.state.today);
+    this.loadCurrentUser();
+    this.loadCurrentPet();
+  }
+
+  loadCurrentUser() {
+    API.getSession()
+      .then((res) => {
+        var splitSessionData = res.data.session.split('"');
+
+        this.setState({
+          userID: splitSessionData[19]
+        });
+        console.log(splitSessionData[19]);
+
+        API.getUserInfo(splitSessionData[19])
+          .then((res) => {
+            var splitSessionData = res.data.session.split('"');
+
+            this.setState({
+              userID: splitSessionData[19]
+            });
+          })
+          .catch((err) => console.log(err));
+
+      })
+      .catch((err) => console.log(err));
+
+
+      // this.setState({
+        //   user: res.data.name,
+        //   lastLogin: res.data.lastLogin
+        // });
+
+        // var date1;
+        // var date2;
+        // date1 = this.state.today;
+        // date2 = new Date(this.state.lastLogin);
+        // var res = Math.abs(date1 - date2) / 1000;
+        // var days = Math.floor(res / 86400);
+        // console.log("Difference: "+days);
+        // this.setState({
+        //   daysDifference: days
+        // });
+  }
+
+  loadCurrentPet() {
+    console.log("STATE INFO");
+    console.log(this.state);
+    API.getPet()
+      .then((res) => {
+
+        const petURL = require('../images/Grow/' + res.data.url);
+
+        this.setState({
+          currentPet: petURL
+        });
+      })
+      .catch((err) => console.log(err));
   }
 
   loadTodosPerDate(date) {
@@ -241,12 +303,21 @@ class Task extends Component {
 
   render() {
     return (
+        <div className="Pet" style={{
+        background: "#FAF0BA",
+        minHeight: "100vh",
+        resizeMode: 'cover',
+      }}>
+          <NavbarPage />
+        
+      
       <Container fluid>
+      <div><img src={this.state.currentPet} alt="TEST"/></div>
         <Header
           title={`Create ToDos`}
           subtitle={`Create ToDos subtitle`}
         />
-
+        
         <Row>
           <Col size="md-10">
             <div id="main" className="center mb-3">
@@ -317,6 +388,7 @@ class Task extends Component {
           </Col>
         </Row>
       </Container>
+      </div>
     );
   }
 }

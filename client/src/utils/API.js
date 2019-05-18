@@ -1,4 +1,5 @@
 import axios from "axios";
+import { compileFunction } from "vm";
 
 export default {
   // Tasks
@@ -68,6 +69,14 @@ export default {
   // Log out user
   logOutUser: function(userData) {
     return axios.post("/api/user/logout", userData);
+  },
+  getUserInfo: function(id) {
+    return axios.post("/api/user/getUserInfo", id);
+  },
+  getPet: function() {
+    return axios.get("/api/pets");
+  },
+  getSession: function() {
+    return axios.get("/api/sessions");
   }
-
 };

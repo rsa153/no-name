@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import { Redirect } from 'react-router-dom'
 import API from "../../utils/API";
+import {  withRouter} from 'react-router-dom';
 
-export default class Signup extends Component {
+ class Signup extends Component {
   constructor(props) {
     super(props);
 
@@ -17,11 +17,13 @@ export default class Signup extends Component {
       password: "",
       cpassword: "",
       errors: {},
-      redirectTo: null
+      redirectTo: null,
+      errMsg: "",
+      successMsg: ""
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdateProps(nextProps) {
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
@@ -54,19 +56,43 @@ export default class Signup extends Component {
         name: this.state.name,
         email: this.state.email,
         password: this.state.password
-      }).then(res => {
+      })
+      .then(res => {
         console.log("------ HandleSubmit Sign Up ------")
         console.log(res)
         if (!res.data.error) {
           console.log('youre good');
           this.setState({
-            redirectTo: '/user'
+            redirectTo: '/pet',
+            successMsg: "You are sucessfully signed up!",
+            errMsg: ""
           })
+          this.props.history.push("/pet")
         } else {
           console.log('duplicate')
         }
+      })
+      .catch(err => {
+        // res.status(422).json(err)
+        console.log("------ Catch Error Signup------")
+        console.log(err)
+        console.log(err.statusMessage)
+        console.log("---- err.response ---- wohoo ")
+        console.log(err.response)
 
-        })
+        const errsignup = err.response.data.message;
+
+        if (errsignup) {
+          console.log("---- errsignup ----")
+          console.log(errsignup)
+
+          this.setState({
+            errMsg: errsignup,
+            successMsg: ""
+          })
+        }
+
+      });
     }
   };
 
@@ -137,8 +163,22 @@ export default class Signup extends Component {
           >
             Sign Up
           </Button>
+
+          {this.state.successMsg.length ? (
+            <h5 className="text-center" style={{ color: "green", fontStyle: "italic" }}>
+              <br />
+              {this.state.successMsg}
+            </h5>
+          ) : (
+            <h5 className="text-center" style={{ color: "red", fontStyle: "italic" }}>
+              <br />
+              {this.state.errMsg}
+            </h5>
+          )}
+
         </form>
       </div>
     );
   }
 }
+export default withRouter(Signup)

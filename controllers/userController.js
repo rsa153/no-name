@@ -11,6 +11,8 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
+    console.log(req);
+
     db.User
       .findById(req.params.id)
       .then(dbModel => res.json(dbModel))
@@ -50,11 +52,20 @@ module.exports = {
       console.log(userMatch)
       if (err) {
         console.log("User signUp error: ", err)
-        res.redirect("/signup")
+        // res.redirect("/signup")
+        return res.status(401).json({
+          message: "Signup Error"
+        })
+      }
 
-      } else if (userMatch) {
+      if (userMatch) {
         console.log(" --- uh oh --- existing user Match ----- ")
-        res.redirect("/signup")
+        // res.redirect("/signup")
+
+        return res.status(401).json({
+          message: "User with that email already exist. Please login or use another email to sign up."
+        })
+
 
         // return res.json({
         //   error: `Sorry, already a user with the email: ${email}`
