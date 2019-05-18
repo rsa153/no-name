@@ -10,7 +10,9 @@ import { TodoForm, TodoListCard } from "../components/TodoList";
 import { DailyProgress } from "../components/User";
 import Header from "../components/Header";
 import NavbarPage from "../components/Nav";
-
+import celebration from '../images/celebration.png';
+import image from '../images/Grow/sflower1.jpg'; 
+import { FormHelperText } from "@material-ui/core";
 const moment = require('moment')
 
 class Task extends Component {
@@ -334,14 +336,17 @@ class Task extends Component {
 
 
       <Container fluid>
-      <div><img src={this.state.currentPet} alt="TEST"/></div>
+      {/* <div><img src={this.state.currentPet} alt="TEST"/></div> */}
+      
         <Header
-          title={`Create ToDos`}
-          subtitle={`Create ToDos subtitle`}
+          title={`Create and Complete Your Tasks`}
+          styles= {{
+          }}
         />
-
+        <h3 className>To Add a Task, click on the date in your calendar, type in your task and click Add Task. To complete your task, click on the checkmark next to it.</h3>
+        <br />
         <Row>
-          <Col size="md-10">
+          <Col size="md-11">
             <div id="main" className="center mb-3">
               <DailyProgress today={this.state.today}
                 color={this.state.progressColor} percent={this.state.dailyPercentComplete}/>
@@ -351,6 +356,8 @@ class Task extends Component {
 
         <Row>
           <Col size="md-10">
+            <div><img width="200px" height="270px" src={image} alt="TEST"/></div>
+            <br />
             <div id="main" className="center">
               <TodoForm addItem={this.addItem} inputElement={this.inputElement}
                 currentItem={this.state.currentItem} handleInput={this.handleTodoInputChange}
@@ -415,14 +422,25 @@ class Task extends Component {
             isOpen={this.state.showTasksCompletionModal}
             contentLabel="Congrats! You finished your daily tasks!"
           >
-            <p>Congrats! You finished your tasks for the day!</p>
-            <button onClick={this.handleCloseTasksCompletionModal}
+             <button onClick={this.handleCloseTasksCompletionModal}
             style = {{
               color: "#0B92C8",
               fontWeight: "bolder"
             }}>
               X</button>
-
+              <h1 className="text-center" style={{ color: "#0B92C8" }}>
+              Congrats! You finished your tasks for the day!</h1>
+              
+              <img src={celebration} alt="celebration" style={{
+              width:"400px", /* This value will depend on what size you want for your loading image, let's say it's 50px */
+              height: "400px",
+              position: "absolute",
+              left: "35%",
+              top: "35%"
+              }}/>
+              <br />
+              <h3 className="text-center" style={{ color: "#0B92C8" }}>
+              Please press the X button in the upper left corner to get back to writing and completing more tasks</h3>
         </ReactModal>
       </div>
     );
